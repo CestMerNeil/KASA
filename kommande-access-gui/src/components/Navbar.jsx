@@ -1,0 +1,72 @@
+/**
+ * @file        Navbar.js
+ * @brief       Responsive Navbar Component with Dropdown and Icon Navigation.
+ * @details     This component renders a responsive navigation bar with a dropdown menu for smaller screens, a horizontal menu for larger screens, 
+ *              and navigation icons for search, shopping cart, and user profile.
+ *              The component adapts to various screen sizes, displaying the dropdown menu on mobile and a horizontal menu on desktop.
+ * @returns     {JSX.Element} - A responsive navbar component with links and interactive icons.
+ *****************************************************************
+ * @component Details
+ * - Uses a dropdown menu in the navbar start section for smaller screens with menu items like "Smart Phone," "PC," and "Accessories."
+ * - A horizontal menu is displayed in the navbar center section on larger screens.
+ * - Three icons (search, cart, and profile) are included in the navbar end section for additional functionality.
+ * - SVG icons are used for scalable, responsive vector graphics.
+ *****************************************************************
+ * @attention
+ * Development Environment: macOS Sequoia 15.0 (24A335)
+ * @par Modification Log:
+ * <table>
+ * <tr><th>Date        <th>Version  <th>Author    <th>Description
+ * <tr><td>2024/10/04  <td>1.0      <td>Ao XIE    <td>Created initial version with responsive layout, dropdown menu, and navigation icons
+ * </table>
+ ******************************************************************
+ */
+
+const Navbar = () => {
+    return (
+        <div className="navbar bg-base-100">
+            <div className="navbar-start">
+                <div className="dropdown">
+                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12H12m-8.25 5.25h16.5" />
+                        </svg>
+                    </div>
+                    <ul
+                        tabIndex={0}
+                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                        <li><a>Smart Phone</a></li>
+                        <li><a>PC</a></li>
+                        <li><a>Accessories</a></li>
+                    </ul>
+                </div>
+                <img src="/favicon.jpg" alt="Home Icon" className="w-8 h-8" />
+            </div>
+            <div className="navbar-center hidden lg:flex">
+                <ul className="menu menu-horizontal px-1">
+                    <li><a>Smart Phone</a></li>
+                    <li><a>PC</a></li>
+                    <li><a>Accessories</a></li>
+                </ul>
+            </div>
+            <div className="navbar-end">
+                <div className="navbar-end flex items-center space-x-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                    </svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Navbar;
