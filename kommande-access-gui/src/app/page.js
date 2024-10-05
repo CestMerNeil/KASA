@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <div>
       <AdImages />
-      <ListCard />
+      <ListCard
+        type="all"
+      />
     </div>
   );
 }

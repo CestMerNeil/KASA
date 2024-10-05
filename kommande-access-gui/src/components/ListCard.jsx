@@ -25,11 +25,11 @@
 import { useState, useEffect } from "react";
 import Card from "@/components/Card";
 
-export default function ListCard() {
+export default function ListCard({ type }) {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch('/products.json')
+        fetch("https://a2d8cca9-8086-41a1-b389-1275e0088277.mock.pstmn.io/data")
             .then((response) => response.json())
             .then((data) => setProducts(data.products))
             .catch((error) => console.error(error));
@@ -37,15 +37,21 @@ export default function ListCard() {
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4 sm:p-6 lg:p-8">
-            {products.map((product, index) => (
-                <Card
-                    key={index}
-                    productName={product.productName}
-                    price={product.price}
-                    image={product.image}
-                    description={product.description}
-                />
-            ))}
+            {products.map((product, index) => {
+                // 在这里进行条件判断
+                if (type === "all" || product.type === type) {
+                    return (
+                        <Card
+                            key={index}
+                            productName={product.productName}
+                            price={product.price}
+                            image={product.image}
+                            description={product.description}
+                        />
+                    );
+                }
+                return null; // 如果条件不满足，返回 null
+            })}
         </div>
     );
 }

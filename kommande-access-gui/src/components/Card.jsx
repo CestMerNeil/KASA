@@ -44,6 +44,7 @@ export default function Card({ productName, price, image, description }) {
                     <button
                         className="btn btn-sm text-white"
                         style={{ backgroundColor: "rgb(124, 139, 160)" }}
+                        log="cliks"
                     >
                         Learn More
                     </button>
