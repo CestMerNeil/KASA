@@ -26,7 +26,13 @@
  ******************************************************************
  */
 
-export default function Card({ productName, price, image, description }) {
+
+import { useCart } from "@/components/CartContext";
+
+export default function Card({ serialNumber, productName, price, image, description, brand }) {
+
+    const { addToCart, cartItemCount } = useCart();
+
     return (
         <div className="card glass max-w-xs w-full text-xs p-4 shadow-md">
             <figure className="w-full h-40 overflow-hidden rounded-md">
@@ -42,11 +48,12 @@ export default function Card({ productName, price, image, description }) {
                 <div className="flex flex-col space-y-3">
                     <span className="text-lg font-bold" style={{ color: "rgb(255, 0, 0)" }}>${price}</span>
                     <button
+                        onClick={() => addToCart({ serialNumber, productName, price, image, description, brand })}
                         className="btn btn-sm text-white"
                         style={{ backgroundColor: "rgb(124, 139, 160)" }}
                         log="cliks"
                     >
-                        Learn More
+                        Add to Cart
                     </button>
                 </div>
             </div>

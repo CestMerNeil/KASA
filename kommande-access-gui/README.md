@@ -6,6 +6,7 @@ The `ListCard` component fetches product data from the `/data` API and displays 
 ## Data Format
 Each product from the API contains the following fields:
 
+- **serialNumber**: A unique identifier for the product.
 - **productName**: The product's name, including specific model details.
 - **brand**: The brand of the product.
 - **model**: The product's specific model identifier.

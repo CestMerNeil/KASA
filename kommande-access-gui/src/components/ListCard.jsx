@@ -29,24 +29,26 @@ export default function ListCard({ type }) {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch("https://a2d8cca9-8086-41a1-b389-1275e0088277.mock.pstmn.io/data")
+        fetch("https://da60dbb1-af1a-4f29-a731-0ee1aed7521c.mock.pstmn.io/data")
             .then((response) => response.json())
             .then((data) => setProducts(data.products))
             .catch((error) => console.error(error));
     }, []);
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4 sm:p-6 lg:p-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 p-4 sm:p-6 lg:p-8">
             {products.map((product, index) => {
                 // 在这里进行条件判断
                 if (type === "all" || product.type === type) {
                     return (
                         <Card
                             key={index}
+                            serialNumber={product.serialNumber}
                             productName={product.productName}
                             price={product.price}
                             image={product.image}
                             description={product.description}
+                            brand={product.brand}
                         />
                     );
                 }
