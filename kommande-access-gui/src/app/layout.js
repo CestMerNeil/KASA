@@ -2,7 +2,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ChatBot from "@/components/ChatBot";
 import { CartProvider } from "@/components/CartContext";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,8 +31,10 @@ export default function RootLayout({ children }) {
       >
         <CartProvider>
           <Navbar />
+
           {children}
           <Footer />
+          <ChatBot />
         </CartProvider>
       </body>
     </html >
