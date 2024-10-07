@@ -11,7 +11,7 @@ export default function ChatBot() {
 
     // Fetching product data from the backend
     useEffect(() => {
-        fetch('/api/backend', { method: 'GET' })
+        fetch('/api/data', { method: 'GET' })
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data.products);
@@ -95,7 +95,7 @@ export default function ChatBot() {
     return (
         <div>
             <button
-                className='fixed bottom-3 right-4 btn btn-circle z-50'
+                className='fixed bottom-5 right-5 btn btn-circle z-50'
                 onClick={handleBtnClick}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -104,9 +104,9 @@ export default function ChatBot() {
             </button>
 
             {isOpen && (
-                <div className="fixed bottom-16 right-5 w-80 bg-white dark:bg-gray-800 text-black dark:text-white shadow-lg rounded-lg border-t border-l border-r border-gray-300 dark:border-gray-700 z-50">
-                    <div className="p-4 flex justify-between items-center border-b dark:border-gray-700">
-                        <h3 className="text-lg font-bold">ChatBot</h3>
+                <div className="fixed bottom-20 right-5 w-96 bg-white dark:bg-gray-800 text-black dark:text-white shadow-lg rounded-lg border-t border-l border-r border-gray-300 dark:border-gray-700 z-50">
+                    <div className="p-2 flex justify-between items-center border-b dark:border-gray-700">
+                        <h3 className="text-sm font-bold">ChatBot</h3>
                         <button
                             onClick={handleBtnClick}
                             className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
@@ -121,7 +121,7 @@ export default function ChatBot() {
                             .map((m, i) => (
                                 <div
                                     key={i}
-                                    className={`p-3 ${m.role === 'assistant' ? 'bg-gray-100 dark:bg-gray-700' : 'bg-blue-100 dark:bg-blue-700'} rounded-lg w-3/4 ${m.role === 'user' ? 'ml-auto' : 'mr-auto'}`}
+                                    className={`p-3 ${m.role === 'assistant' ? 'bg-gray-100 dark:bg-gray-700' : 'bg-blue-100 dark:bg-blue-700'} rounded-lg w-3/4 ${m.role === 'user' ? 'ml-auto' : 'mr-auto'} text-sm`}
                                 >
                                     {m.content}
                                 </div>
@@ -129,16 +129,16 @@ export default function ChatBot() {
                         <div ref={messagesEndRef} />
                     </div>
 
-                    <div className="p-3 border-t dark:border-gray-700 flex items-center">
+                    <div className="p-1 border-t dark:border-gray-700 flex">
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Type your message..."
-                            className="input input-bordered w-full mr-2 dark:bg-gray-900 dark:text-white"
+                            className="input input-m input-bordered flex-grow w-auto mr-2 dark:bg-gray-900 dark:text-white"
                             onKeyDown={handleKeyDown}
                         />
-                        <button className="btn btn-primary" onClick={sendMessage}>
+                        <button className="btn btn-primary btn-m" onClick={sendMessage}>
                             Send
                         </button>
                     </div>

@@ -29,7 +29,7 @@ export default function ListCard({ type }) {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch('/api/backend', { method: 'GET' })
+        fetch('/api/data', { method: 'GET' })
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data.products);
