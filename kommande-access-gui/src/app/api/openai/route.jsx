@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-    const { prompt } = await req.json();
-
+    const body = await req.json();
     try {
-        const res = await fetch("https://api.openai.com/v1/engines/davinci/completions", {
+        const res = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -12,14 +11,14 @@ export async function POST(req) {
             },
             body: JSON.stringify({
                 model: 'gpt-3.5-turbo',
-                message: [{ role: 'usee', content: prompt }],
+                messages: body,
             }),
         });
 
         const data = await res.json();
         return NextResponse.json(data);
     } catch (error) {
-        return NextResponse.error(error);
+        return NextResponse.json({ error: 'Something went wrong', details: error.message }, { status: 500 });
     }
 
 }

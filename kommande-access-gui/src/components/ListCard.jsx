@@ -29,11 +29,14 @@ export default function ListCard({ type }) {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch("https://da60dbb1-af1a-4f29-a731-0ee1aed7521c.mock.pstmn.io/data")
+        fetch('/api/backend', { method: 'GET' })
             .then((response) => response.json())
-            .then((data) => setProducts(data.products))
+            .then((data) => {
+                setProducts(data.products);
+                console.log(data.products);
+            })
             .catch((error) => console.error(error));
-    }, []);
+    }, [type]);
 
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 p-4 sm:p-6 lg:p-8">

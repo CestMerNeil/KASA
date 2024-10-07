@@ -60,8 +60,9 @@ export default function AdImages() {
                 <Image
                     src={images[currentImage]}
                     alt="Ad Image"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    priority
+                    objectFit='cover'
                     className="absolute inset-0 w-full h-full"
                 />
                 <div className="absolute inset-0 flex items-center justify-between px-5">
