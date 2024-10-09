@@ -33,8 +33,8 @@ With these features, the company expects to create a standout multimedia e-comme
 ## Technical Stack
 
 - **Frontend**: Next.js (React-based framework for building user interfaces)
-- **Backend**: Java with Spring Boot (for handling data management and API)
-- **Database**: MySQL (for storing product information, user data, etc.)
+- **Backend**: TODO
+- **Database**: TODO
 - **Payment Integration**: Stripe (for processing online transactions)
 
 ## Features
