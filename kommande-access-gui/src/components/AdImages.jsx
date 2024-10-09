@@ -12,14 +12,6 @@
  * - Images are rendered with Next.js `Image` component for optimization and are full-width, covering the container.
  * - Navigation buttons are styled with custom classes and positioned to float on either side of the image.
  *****************************************************************
- * @attention
- * Development Environment: macOS Sequoia 15.0 (24A335)
- * @par Modification Log:
- * <table>
- * <tr><th>Date        <th>Version  <th>Author    <th>Description
- * <tr><td>2024/10/04  <td>1.0      <td>Ao XIE    <td>Created initial version with automatic and manual carousel functionality
- * </table>
- ******************************************************************
  */
 
 "use client";
@@ -60,8 +52,9 @@ export default function AdImages() {
                 <Image
                     src={images[currentImage]}
                     alt="Ad Image"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    priority
+                    objectFit='cover'
                     className="absolute inset-0 w-full h-full"
                 />
                 <div className="absolute inset-0 flex items-center justify-between px-5">
