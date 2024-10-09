@@ -1,3 +1,22 @@
+/**
+ * @file        ChatBot.js
+ * @brief       Chatbot Component with Interactive Messaging and Product Recommendations.
+ * @details     This component provides an interactive chatbot that allows users to send messages and receive responses.
+ *              It features automatic product fetching from the backend and displays product recommendations within the chat.
+ *              The chatbot interface includes an open/close button and adapts to fit the screen with a fixed position.
+ *              Users can input text and send messages via an input field or by pressing Enter.
+ *              Bot responses are handled through API calls.
+ * @returns     {JSX.Element} - A chatbot component with product recommendations and messaging functionality.
+ *****************************************************************
+ * @component Details
+ * - Uses `useState` to track the chatbot state (open/close), messages, and input field.
+ * - Uses `useEffect` for fetching product data on component mount and scrolling to the bottom of messages.
+ * - Fetches responses from OpenAI's API for dynamic bot replies.
+ * - Messages are displayed conditionally based on the role (assistant or user) with custom styling.
+ *****************************************************************
+ */
+
+
 'use client';
 
 import { useState, useRef, useEffect } from 'react';

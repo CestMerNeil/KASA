@@ -32,7 +32,7 @@ const Cart = () => {
 
     return (
         <div className="container mx-auto py-8">
-            <h1 className="text-4xl font-bold mb-6 text-center dark:text-white">Your Cart</h1>
+            <h1 className="text-4xl font-bold mb-6 text-center dark:text-white">Cart</h1>
             {cartItems.length === 0 ? (
                 <p className="text-center text-gray-500 dark:text-gray-300">Your cart is empty</p>
             ) : (
