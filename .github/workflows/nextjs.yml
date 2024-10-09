@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Change directory to kommende-access-gui
-        run: cd kommende-access-gui
+        run: cd kommande-access-gui
       - name: Detect package manager
         id: detect-package-manager
         run: |
