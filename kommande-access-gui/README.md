@@ -1,3 +1,17 @@
+# Application Integration
+**Members : Ao XIE, Reynalde SEGERIE, Antoine Viton**
+
+# Context of use
+Nous sommes l'équipe de développement d'une jeune entreprise de multimédia dénommé KASA souhaitant automatiser la gestion de son catalogue de produits. L'entreprise KASA besoin d'une application web pour afficher les produits, les trier par catégorie et permettre aux utilisateurs de rechercher des produits.
+Par ailleurs, l'entreprise souhaite se démarquer de ses concurrents en proposant une expérience utilisateur de qualité.
+
+Afin de fidéliser sa clientèle, l'entreprise souhaite également mettre en place un système d'espace personnel (authentification, compte utilisateur, etc.) pour permettre aux utilisateurs de sauvegarder leurs produits préférés et de retrouver leurs recherches précédentes.
+
+We are the development team of a young multimedia company called KASA that wants to automate the management of its product catalogue. KASA needed a web application to display products, sort them by category and allow users to search for products.
+The company also wanted to stand out from its competitors by offering a high-quality user experience.
+
+In order to build customer loyalty, the company also wanted to set up a personal space system (authentication, user account, etc.) to enable users to save their favourite products and retrieve their previous searches.
+
 # Product Display Workflow
 
 ## Overview
