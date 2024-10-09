@@ -1,4 +1,21 @@
+# Application Integration
+**Members : Ao XIE, Reynalde SEGERIE, Antoine Viton**
+
+# Context of use
+Nous sommes l'équipe de développement d'une jeune entreprise de multimédia dénommé KASA souhaitant automatiser la gestion de son catalogue de produits. L'entreprise KASA besoin d'une application web pour afficher les produits, les trier par catégorie et permettre aux utilisateurs de rechercher des produits.
+Par ailleurs, l'entreprise souhaite se démarquer de ses concurrents en proposant une expérience utilisateur de qualité.
+
+Afin de fidéliser sa clientèle, l'entreprise souhaite également mettre en place un système d'espace personnel (authentification, compte utilisateur, etc.) pour permettre aux utilisateurs de sauvegarder leurs produits préférés et de retrouver leurs recherches précédentes.
+
+We are the development team of a young multimedia company called KASA that wants to automate the management of its product catalogue. KASA needed a web application to display products, sort them by category and allow users to search for products.
+The company also wanted to stand out from its competitors by offering a high-quality user experience.
+
+In order to build customer loyalty, the company also wanted to set up a personal space system (authentication, user account, etc.) to enable users to save their favourite products and retrieve their previous searches.
+
 # Product Display Workflow
+<font color='red'>**TODO:** The code in the Getting Data from API section has been refactored and needs to be rewritten except for the flowchart.</font>
+
+
 
 ## Overview
 The `ListCard` component fetches product data from the `/data` API and displays it based on the selected category (`type`). This document outlines the structure of the data and how the frontend manages product categorization and presentation.
@@ -34,15 +51,15 @@ Each product from the API contains the following fields:
 flowchart TD
     A(Home Page) --> B[Fetch All Products Basic Info from API]
     C -->|Using Search Function| G[Show Search Page]
-    G --> H[Fetch Products with Key Words from API]
+    G --> H[Filter Products with Key Word]
     H --> I[Display Products with Key Word]
-    I -->|User selects a product| D
+    I -->|User add a product to cart| D
     B --> C[Display all products]
-    C -->|User selects a product| D
-    C -->|User selects sub-pages| E[Fetch All Products Basic Info from API]
+    C -->|User add a product to cart| D
+    C -->|User selects sub-pages| E[Filter Products with Sub-Page]
     E --> K[Display Products with Sub-Page]
-    K -->|User selects a product| D[Fetch product details form API]
-    D --> F(Show product details)
+    K -->|User add a product to cart| D(Product added to cart)
+
 ```
 
 # Chatbot Workflow
@@ -73,3 +90,10 @@ graph TD;
     C1 --> J[Error handling for backend API];
     G1 --> K[Error handling for OpenAI API];
 ```
+
+# Search Functionality
+
+## Overview
+
+by using Fuse.js, the search functionality allows users to search for products based on keywords. This document outlines the search functionality and how it interacts with the product data.
+
