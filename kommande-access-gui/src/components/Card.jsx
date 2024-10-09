@@ -21,6 +21,7 @@
 
 import { useState } from 'react';
 import { useCart } from "@/components/CartContext";
+import Image from 'next/image';
 
 export default function Card({ serialNumber, productName, price, image, description, brand }) {
     const { addToCart, cartItemCount } = useCart();
@@ -34,7 +35,7 @@ export default function Card({ serialNumber, productName, price, image, descript
     return (
         <div className="card glass max-w-xs w-full text-xs p-4 shadow-md">
             <figure className="w-full h-40 overflow-hidden rounded-md">
-                <img
+                <Image
                     src={image}
                     alt={productName}
                     className="w-full h-full object-cover"

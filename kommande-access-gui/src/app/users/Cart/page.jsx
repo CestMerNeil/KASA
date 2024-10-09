@@ -19,7 +19,8 @@
 'use client';
 
 import { useCart } from '@/components/CartContext';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
+import Image from 'next/image';
 
 const Cart = () => {
     const { cartItems, removeFromCart } = useCart();
@@ -43,7 +44,7 @@ const Cart = () => {
                                 key={item.serialNumber}
                                 className="flex items-center bg-white dark:bg-gray-800 shadow-lg p-6 rounded-lg space-x-6"
                             >
-                                <img
+                                <Image
                                     src={item.image}
                                     alt={item.productName}
                                     className="w-24 h-24 object-cover rounded-md"

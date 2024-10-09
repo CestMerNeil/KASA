@@ -36,7 +36,7 @@ export default function AdImages() {
         }, 10000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [images.length]);
 
     const handlePrev = () => {
         setCurrentImage((prevIndex) => (prevIndex - 1 + images.length) % images.length);
