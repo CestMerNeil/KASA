@@ -60,7 +60,7 @@ jobs:
         working-directory: kommande-access-gui
 
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: ${{ steps.detect-package-manager.outputs.runner }} npx next build
         working-directory: kommande-access-gui
 
       - name: Upload artifact
