@@ -49,7 +49,7 @@ export default function Search() {
                     />
                 </div>
                 <div className="flex justify-center mb-6">
-                    <button onClick={handleSearch} className="btn btn-primary w-full">
+                    <button onClick={handleSearch} className="btn btn-neutral w-full">
                         Search
                     </button>
                 </div>
