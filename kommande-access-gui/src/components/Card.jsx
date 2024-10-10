@@ -33,17 +33,18 @@ export default function Card({ serialNumber, productName, price, image, descript
     };
 
     return (
-        <div className="card glass max-w-xs w-full text-xs p-4 shadow-md">
+        <div className="card glass max-w-xs w-full text-xs p-2 shadow-md">
             <figure className="w-full h-40 overflow-hidden rounded-md">
-                <Image
+                <img
                     src={image}
-                    alt={productName}
+                    alt={'/testImgProduct.png'}
                     className="w-full h-full object-cover"
+                    layout={'fill'}
                 />
             </figure>
             <div className="card-body p-4">
-                <h2 className="card-title text-sm font-semibold mb-2">{productName}</h2>
-                <p className="text-gray-500 mb-3 line-clamp-2">{description}</p>
+                <h2 className="card-title text-sm mb-2">{productName}</h2>
+                <p className="text-gray-500 text-xs mb-3 line-clamp-2">{description}</p>
                 <div className="flex flex-col space-y-3">
                     <span className="text-lg font-bold" style={{ color: "rgb(255, 0, 0)" }}>${price}</span>
                     <button
@@ -51,8 +52,7 @@ export default function Card({ serialNumber, productName, price, image, descript
                             addToCart({ serialNumber, productName, price, image, description, brand });
                             handleClick(productName);
                         }}
-                        className="btn btn-sm text-white"
-                        style={{ backgroundColor: "rgb(124, 139, 160)" }}
+                        className="btn btn-sm btn-neutral text-white"
                     >
                         Add to Cart
                     </button>

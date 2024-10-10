@@ -21,7 +21,7 @@
 
 import {useState, useEffect} from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import {useRouter} from 'next/navigation';
 
 export default function Login() {
     const router = useRouter();
@@ -31,7 +31,7 @@ export default function Login() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if(login) {
+        if (login) {
             router.push('/users/Dashboard');
         }
     }, [login, router]);
@@ -64,56 +64,59 @@ export default function Login() {
     };
 
     return (
-        <div className="md:container md:mx-auto flex p-10">
-            <div className="flex-1 relative w-32 p-5">
-                <Image
-                    src="/imgLogin/login_1.jpg"
-                    alt="Login"
-                    priority
-                    className="absolute inset-0 w-full rounded-lg"
-                    fill
-                    objectFit='cover'
-                    quality={100}
+        <div className="flex flex-col items-center min-h-screen bg-base-200 p-2">
+            <div className="card w-[90%] max-w-none shadow-xl bg-base-100 p-6">
+                <div className="md:container md:mx-auto flex p-10">
+                    <div className="flex-1 relative w-32 p-5">
+                        <Image
+                            src="/imgLogin/login_1.jpg"
+                            alt="Login"
+                            priority
+                            className="absolute inset-0 w-full rounded-lg"
+                            fill
+                            objectFit='cover'
+                            quality={100}
 
-                />
-            </div>
+                        />
+                    </div>
 
-            <div className="flex-1 w-64 p-5">
-                <div className={'p-5 flex-1'}>
-                    <label className="input input-bordered flex items-center gap-2 p-5">
-                        Email
-                        <input
-                            type="text"
-                            className="grow"
-                            placeholder="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </label>
-                </div>
-                <div className={'p-5'}>
-                    <label className="input input-bordered flex items-center gap-2 p-4">
-                        Password
-                        <input
-                            type="password"
-                            className="grow"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </label>
-                </div>
-                <div className="items-center p-4">
-                    <button
-                        className="btn btn-primary w-full"
-                        onClick={handleLogin}
-                    >
-                        Login
-                    </button>
+                    <div className="flex-1 w-64 p-5">
+                        <div className={'p-5 flex-1'}>
+                            <label className="input input-bordered flex items-center gap-2 p-5">
+                                Email
+                                <input
+                                    type="text"
+                                    className="grow"
+                                    placeholder="Username"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                            </label>
+                        </div>
+                        <div className={'p-5'}>
+                            <label className="input input-bordered flex items-center gap-2 p-4">
+                                Password
+                                <input
+                                    type="password"
+                                    className="grow"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </label>
+                        </div>
+                        <div className="items-center p-4">
+                            <button
+                                className="btn btn-primary w-full"
+                                onClick={handleLogin}
+                            >
+                                Login
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-    )
-        ;
+    );
 }
