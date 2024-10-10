@@ -20,9 +20,17 @@
 
 import { useCart } from '@/components/CartContext';
 import { useEffect, useState } from 'react'
+<<<<<<< Updated upstream
 import Image from 'next/image';
 
 const Cart = () => {
+=======
+//import { loadStripe } from '@stripe/stripe-js';
+
+//const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+
+export default function Cart() {
+>>>>>>> Stashed changes
     const { cartItems, removeFromCart } = useCart();
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -31,6 +39,46 @@ const Cart = () => {
         setTotalPrice(total);
     }, [cartItems]);
 
+<<<<<<< Updated upstream
+=======
+    const handleCheckout = async () => {
+        const stripe = await stripePromise;
+        /*
+        const lineItems = cartItems.map((item) => ({
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: item.productName,
+                    image: [item.image],
+                },
+                unit_amount: item.price * 100,
+            },
+            quantity: 1,
+        }));
+
+        try {
+            const response = await fetch('/api/stripe', {
+                mothod: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    line_items: lineItems,
+                }),
+            });
+
+            const session = await response.json();
+            if (session.url) {
+                window.location.href = session.url;
+            }
+        } catch (error) {
+            console.error('Error Checkout:', error);
+        }
+        */
+    };
+
+
+>>>>>>> Stashed changes
     return (
         <div className="container mx-auto py-8">
             <h1 className="text-4xl font-bold mb-6 text-center dark:text-white">Cart</h1>
