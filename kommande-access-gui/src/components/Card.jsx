@@ -19,37 +19,41 @@
  */
 
 
-import { useState } from 'react';
-import { useCart } from "@/components/CartContext";
-import Image from 'next/image';
+import {useState} from 'react';
+import {useCart} from "@/components/CartContext";
+import Link from 'next/link';
 
-export default function Card({ serialNumber, productName, price, image, description, brand }) {
-    const { addToCart, cartItemCount } = useCart();
+export default function Card({serialNumber, productName, price, image, description, brand}) {
+    const {addToCart, cartItemCount} = useCart();
     const [showToast, setShowToast] = useState(false);
 
     const handleClick = (productName) => {
         setShowToast(true);
-        setTimeout(() => setShowToast(false), 3000);
+        setTimeout(() => setShowToast(false), 1500);
     };
 
     return (
+
         <div className="card glass max-w-xs w-full text-xs p-2 shadow-md">
-            <figure className="w-full h-40 overflow-hidden rounded-md">
-                <img
-                    src={image}
-                    alt={'/testImgProduct.png'}
-                    className="w-full h-full object-cover"
-                    layout={'fill'}
-                />
-            </figure>
+            <Link href={`/products/${serialNumber}`}>
+                <figure className="w-full h-40 overflow-hidden rounded-md">
+                    <img
+                        src={image}
+                        alt={'/testImgProduct.png'}
+                        className="w-full h-full object-cover"
+                        layout={'fill'}
+                    />
+                </figure>
+            </Link>
             <div className="card-body p-4">
                 <h2 className="card-title text-sm mb-2">{productName}</h2>
                 <p className="text-gray-500 text-xs mb-3 line-clamp-2">{description}</p>
                 <div className="flex flex-col space-y-3">
-                    <span className="text-lg font-bold" style={{ color: "rgb(255, 0, 0)" }}>${price}</span>
+                    <span className="text-lg font-bold" style={{color: "rgb(255, 0, 0)"}}>${price}</span>
                     <button
-                        onClick={() => {
-                            addToCart({ serialNumber, productName, price, image, description, brand });
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            addToCart({serialNumber, productName, price, image, description, brand});
                             handleClick(productName);
                         }}
                         className="btn btn-sm btn-neutral text-white"
