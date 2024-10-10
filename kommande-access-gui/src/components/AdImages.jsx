@@ -52,7 +52,7 @@ export default function AdImages() {
                 <Image
                     src={images[currentImage]}
                     alt="Ad Image"
-                    fill
+                    layout={'fill'}
                     priority
                     objectFit='cover'
                     className="absolute inset-0 w-full h-full"

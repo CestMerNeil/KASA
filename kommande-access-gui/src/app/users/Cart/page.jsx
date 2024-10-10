@@ -20,9 +20,11 @@
 
 import { useCart } from '@/components/CartContext';
 import { useEffect, useState } from 'react'
-import Image from 'next/image';
+import { loadStripe } from '@stripe/stripe-js';
 
-const Cart = () => {
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+
+export default function Cart() {
     const { cartItems, removeFromCart } = useCart();
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -30,6 +32,41 @@ const Cart = () => {
         const total = cartItems.reduce((acc, item) => acc + item.price, 0);
         setTotalPrice(total);
     }, [cartItems]);
+
+    const handleCheckout = async () => {
+        const stripe = await stripePromise;
+        const lineItems = cartItems.map((item) => ({
+            price_data: {
+                currency: 'usd',
+                product_data: {
+                    name: item.productName,
+                    image: [item.image],
+                },
+                unit_amount: item.price * 100,
+            },
+            quantity: 1,
+        }));
+
+        try {
+            const response = await fetch('/api/stripe', {
+                mothod: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    line_items: lineItems,
+                }),
+            });
+
+            const session = await response.json();
+            if (session.url) {
+                window.location.href = session.url;
+            }
+        } catch (error) {
+            console.error('Error Checkout:', error);
+        }
+    };
+
 
     return (
         <div className="container mx-auto py-8">
@@ -44,7 +81,7 @@ const Cart = () => {
                                 key={item.serialNumber}
                                 className="flex items-center bg-white dark:bg-gray-800 shadow-lg p-6 rounded-lg space-x-6"
                             >
-                                <Image
+                                <img
                                     src={item.image}
                                     alt={item.productName}
                                     className="w-24 h-24 object-cover rounded-md"
@@ -70,12 +107,15 @@ const Cart = () => {
                             <p className="text-lg dark:text-gray-300">Total Items: {cartItems.length}</p>
                             <p className="text-lg font-bold dark:text-gray-100">Total Price: ${totalPrice.toFixed(2)}</p>
                         </div>
-                        <button className="btn btn-primary btn-block">Proceed to Checkout</button>
+                        <button
+                            className="btn btn-primary btn-block"
+                            onClick={handleCheckout}
+                        >
+                            Proceed to Checkout
+                        </button>
                     </div>
                 </div>
             )}
         </div>
     );
 };
-
-export default Cart;
