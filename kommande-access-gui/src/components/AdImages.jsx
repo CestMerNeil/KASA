@@ -56,6 +56,7 @@ export default function AdImages() {
                     priority
                     objectFit='cover'
                     className="absolute inset-0 w-full h-full"
+                    quality={50} // For a higher LCP score, set quality to 50
                 />
                 <div className="absolute inset-0 flex items-center justify-between px-5">
                     <button onClick={handlePrev} className="btn btn-circle">❮</button>
