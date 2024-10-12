@@ -19,9 +19,14 @@
 'use client';
 
 import {useState, useEffect} from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
+
+    if (signIn) {
+
+    }
 
     try {
         useEffect(() => {
@@ -42,6 +47,13 @@ export default function Dashboard() {
             <h1>Welcome, {user?.name}!</h1>
             <p>Your email is: {user?.email}</p>
             <p>Your phone number is: {user?.phone}</p>
+            <button
+                onClick={() => {
+                    signOut({callbackUrl: '/users/Login'});
+                    window.location.href = "https://accounts.google.com/Logout";
+                }}>
+                Sign Out
+            </button>
 
         </div>
     );

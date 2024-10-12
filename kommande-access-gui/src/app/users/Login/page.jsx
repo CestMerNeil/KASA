@@ -57,23 +57,22 @@ export default function Login() {
                     router.push('/users/Dashboard'); // 登录成功后跳转
                 } else {
                     const errorData = await res.json();
-                    setError(errorData.message || '登录失败，请重试。');
+                    setError(errorData.message || 'Error logging in.');
                 }
             } else {
-                setError('用户名和密码不能为空。');
+                setError('Please enter a valid username and password.');
             }
         } catch (error) {
-            setError('登录时出错，请稍后再试。');
+            setError('Error logging in. Please try again later.');
             console.error('Error logging in:', error);
         }
     };
 
-    // Google 登录处理
     const handleGoogleLogin = async () => {
         try {
-            signIn('google', { callbackUrl: '/users/Dashboard' });
+            signIn('google', { callbackUrl: '/users/Dashboard', prompt: 'select_account' });
         } catch (error) {
-            setError('Google 登录失败，请稍后再试。');
+            setError('Google sign in error. Please try again later.');
             console.error('Google sign in error:', error);
         }
     };
@@ -82,7 +81,6 @@ export default function Login() {
         <div className="flex flex-col items-center min-h-screen bg-base-200 p-2">
             <div className="card w-[90%] max-w-none shadow-xl bg-base-100 p-6">
                 <div className="md:container md:mx-auto flex p-10">
-                    {/* 背景图片部分 */}
                     <div className="flex-1 relative w-32 p-5">
                         <Image
                             src="/imgLogin/login_1.jpg"
@@ -94,7 +92,6 @@ export default function Login() {
                         />
                     </div>
 
-                    {/* 登录表单部分 */}
                     <div className="flex-1 w-64 p-5">
                         <div className="p-5 flex-1">
                             <label className="input input-bordered flex items-center gap-2 p-5">
@@ -121,7 +118,6 @@ export default function Login() {
                             </label>
                         </div>
 
-                        {/* 登录按钮 */}
                         <div className="items-center p-4">
                             <button
                                 className="btn btn-primary w-full"
@@ -132,16 +128,31 @@ export default function Login() {
                             </button>
                         </div>
 
-                        {/* 显示错误消息 */}
                         {error && <div className="text-red-500 p-4">{error}</div>}
 
-                        {/* Google 登录按钮 */}
-                        <div className="items-center p-4">
+                        <div className="items-center p-4 rounded-md">
                             <button
-                                className="btn btn-secondary w-full"
                                 onClick={handleGoogleLogin}
+                                style={{
+                                    backgroundColor: "white",
+                                    border: "1px solid #ddd",
+                                    padding: "10px 15px",
+                                    fontSize: "16px",
+                                    borderRadius: "5px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    cursor: "pointer"
+                                }}
                             >
-                                使用 Google 登录
+                                <Image
+                                    src="https://developers.google.com/identity/images/g-logo.png"
+                                    alt="Google Logo"
+                                    width={20}
+                                    height={20}
+                                    style={{marginRight: "10px"}}
+                                    className={"rounded-md"}
+                                />
+                                Sign in with Google
                             </button>
                         </div>
                     </div>
