@@ -16,50 +16,64 @@
  *****************************************************************
  */
 
-
 'use client';
 
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { signIn, useSession } from 'next-auth/react';
 
 export default function Login() {
     const router = useRouter();
-    const [login, setLogin] = useState(false);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const { data: session, status } = useSession(); // Google 登录状态
 
     useEffect(() => {
-        if (login) {
+        // 如果用户已经通过 Google 登录，跳转到 Dashboard
+        if (status === 'authenticated') {
             router.push('/users/Dashboard');
         }
-    }, [login, router]);
+    }, [status, router]);
 
+    // 表单登录处理
     const handleLogin = async () => {
         setError('');
         try {
             if (username.trim() !== '' && password.trim() !== '') {
                 const res = await fetch('/api/user', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({username, password}),
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password }),
                 });
 
                 if (res.ok) {
                     const data = await res.json();
-                    setLogin(true);
-                    localStorage.setItem('token', data.token);
-                    console.log('Login successful, token saved');
+                    // 确保只在浏览器环境下访问 localStorage
+                    if (typeof window !== 'undefined') {
+                        localStorage.setItem('token', data.token);
+                    }
+                    router.push('/users/Dashboard'); // 登录成功后跳转
                 } else {
                     const errorData = await res.json();
-                    setError(errorData.message);
+                    setError(errorData.message || 'Error logging in.');
                 }
             } else {
-                console.error('Username and password are required.');
+                setError('Please enter a valid username and password.');
             }
         } catch (error) {
+            setError('Error logging in. Please try again later.');
             console.error('Error logging in:', error);
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            signIn('google', { callbackUrl: '/users/Dashboard', prompt: 'select_account' });
+        } catch (error) {
+            setError('Google sign in error. Please try again later.');
+            console.error('Google sign in error:', error);
         }
     };
 
@@ -74,14 +88,12 @@ export default function Login() {
                             priority
                             className="absolute inset-0 w-full rounded-lg"
                             fill
-                            objectFit='cover'
                             quality={100}
-
                         />
                     </div>
 
                     <div className="flex-1 w-64 p-5">
-                        <div className={'p-5 flex-1'}>
+                        <div className="p-5 flex-1">
                             <label className="input input-bordered flex items-center gap-2 p-5">
                                 Email
                                 <input
@@ -93,7 +105,7 @@ export default function Login() {
                                 />
                             </label>
                         </div>
-                        <div className={'p-5'}>
+                        <div className="p-5">
                             <label className="input input-bordered flex items-center gap-2 p-4">
                                 Password
                                 <input
@@ -105,18 +117,47 @@ export default function Login() {
                                 />
                             </label>
                         </div>
+
                         <div className="items-center p-4">
                             <button
                                 className="btn btn-primary w-full"
                                 onClick={handleLogin}
+                                disabled={username.trim() === '' || password.trim() === ''}
                             >
                                 Login
+                            </button>
+                        </div>
+
+                        {error && <div className="text-red-500 p-4">{error}</div>}
+
+                        <div className="items-center p-4 rounded-md">
+                            <button
+                                onClick={handleGoogleLogin}
+                                style={{
+                                    backgroundColor: "white",
+                                    border: "1px solid #ddd",
+                                    padding: "10px 15px",
+                                    fontSize: "16px",
+                                    borderRadius: "5px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    cursor: "pointer"
+                                }}
+                            >
+                                <Image
+                                    src="https://developers.google.com/identity/images/g-logo.png"
+                                    alt="Google Logo"
+                                    width={20}
+                                    height={20}
+                                    style={{marginRight: "10px"}}
+                                    className={"rounded-md"}
+                                />
+                                Sign in with Google
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 }
