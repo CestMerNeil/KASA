@@ -1,20 +1,3 @@
-/**
- * @file        CartContext.js
- * @brief       Context Provider for Shopping Cart State Management.
- * @details     This file defines the CartContext, which manages the state of the shopping cart.
- *              It provides functions for adding items to the cart, removing items, and calculating the number of items in the cart.
- *              The context is made accessible to the entire application through the CartProvider component.
- *              Any component within the CartProvider tree can access cart-related functions and state using the useCart hook.
- * @returns     {JSX.Element} - Provides the shopping cart state and functions to its children components.
- *****************************************************************
- * @component Details
- * - Provides `addToCart`, `removeFromCart`, and `cartItemCount` functions via the CartContext.
- * - Manages the cart items using the `useState` hook.
- * - Allows children components to access cart state and functions through the `useCart` hook.
- * - Filters the cart items by serial number when removing an item from the cart.
- *****************************************************************
- */
-
 'use client';
 
 import React, { createContext, useContext, useState } from 'react';
@@ -24,15 +7,40 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
 
+    // Fonction pour ajouter un produit au panier
     const addToCart = (item) => {
-        setCartItems((prevItems) => [...prevItems, item]);
+        setCartItems((prevItems) => {
+            const existingItem = prevItems.find(i => i.serialNumber === item.serialNumber);
+            if (existingItem) {
+                return prevItems.map(i =>
+                    i.serialNumber === item.serialNumber ? { ...i, quantity: i.quantity + 1 } : i
+                );
+            } else {
+                return [...prevItems, { ...item, quantity: 1 }];
+            }
+        });
     };
 
+    // Fonction pour enlever une quantité d'un produit ou le retirer complètement
     const removeFromCart = (serialNumber) => {
-        setCartItems((prevItems) => prevItems.filter((item) => item.serialNumber !== serialNumber));
+        setCartItems((prevItems) => {
+            const existingItem = prevItems.find(item => item.serialNumber === serialNumber);
+            if (existingItem) {
+                if (existingItem.quantity > 1) {
+                    return prevItems.map(item =>
+                        item.serialNumber === serialNumber
+                            ? { ...item, quantity: item.quantity - 1 }
+                            : item
+                    );
+                } else {
+                    return prevItems.filter(item => item.serialNumber !== serialNumber);
+                }
+            }
+            return prevItems;
+        });
     };
 
-    const cartItemCount = cartItems.length;
+    const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
     return (
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, cartItemCount }}>
