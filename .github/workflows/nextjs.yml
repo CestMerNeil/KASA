@@ -22,12 +22,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Print working directory after checkout (for debugging)
-        run: pwd
-
-      - name: Change to the correct directory
-        run: cd kommande-access-gui
 
       - name: List all files in kommande-access-gui directory (for debugging)
         run: ls -la kommande-access-gui
