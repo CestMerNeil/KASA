@@ -35,6 +35,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22.9.0"
+          cache: yarn
+          cache-dependency-path: kommande-access-gui/yarn.lock
           
       - name: Print Working Directory 
         run: pwd
