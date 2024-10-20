@@ -23,8 +23,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: List all files in kommande-access-gui directory (for debugging)
-        run: ls -la kommande-access-gui
+      - name: Print working directory after checkout (for debugging)
+        run: pwd
+
+      - name: Change to the correct directory
+        working-directory: kommande-access-gui
+        run: |
+          ls -la
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
@@ -33,12 +38,9 @@ jobs:
           cache: yarn
 
       - name: Install dependencies
-        run: yarn install
-        #run: ${{ env.manager }} ${{ env.command }}
-        #run: npm install
         working-directory: kommande-access-gui
+        run: yarn install
 
       - name: Build with Next.js
-        run: yarn build
-        #run: ${{ env.runner }} next build
         working-directory: kommande-access-gui
+        run: yarn build
