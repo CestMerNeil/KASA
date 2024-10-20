@@ -22,9 +22,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Change to the project directory
-        run: cd kommande-access-gui
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
