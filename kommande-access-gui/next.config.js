@@ -2,6 +2,14 @@
 module.exports = {
     reactStrictMode: true,
     images: {
-        domains: ['developers.google.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'perso.isima.fr',
+                port: '',
+                pathname: '/**',
+
+            },
+        ],
     },
 };

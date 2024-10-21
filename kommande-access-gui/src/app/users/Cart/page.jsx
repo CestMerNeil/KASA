@@ -44,11 +44,14 @@ const Cart = () => {
                                 key={item.serialNumber}
                                 className="flex items-center bg-white dark:bg-gray-800 shadow-lg p-6 rounded-lg space-x-6"
                             >
-                                <img
-                                    src={item.image}
-                                    alt={item.productName}
-                                    className="w-24 h-24 object-cover rounded-md"
-                                />
+                                <div className="w-24 h-24 relative">
+                                    <Image
+                                        src={item.image}
+                                        alt={item.productName}
+                                        className="w-24 h-24 object-cover rounded-md"
+                                        fill
+                                    />
+                                </div>
                                 <div className="flex-grow">
                                     <h2 className="text-xl font-semibold dark:text-white">{item.productName}</h2>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">Brand: {item.brand}</p>

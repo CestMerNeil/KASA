@@ -1,13 +1,14 @@
 'use client';
 
-import {useParams} from "next/navigation";
-import {useData} from '@/components/DataContext';
-import {useState} from "react";
-import {useCart} from "@/components/CartContext"
+import { useParams } from "next/navigation";
+import { useData } from '@/components/DataContext';
+import { useState } from "react";
+import { useCart } from "@/components/CartContext"
+import Image from "next/image";
 
 export default function ProductDetail() {
-    const {addToCart} = useCart();
-    const {serialNumber} = useParams();
+    const { addToCart } = useCart();
+    const { serialNumber } = useParams();
     const [showToast, setShowToast] = useState(false);
     const products = useData().products;
     const product = products.find((product) => product.serialNumber === serialNumber);
@@ -29,11 +30,12 @@ export default function ProductDetail() {
                     {product.productName}
                 </h1>
                 <div className="flex flex-col lg:flex-row lg:justify-between gap-8">
-                    <div className="w-full lg:w-2/3">
-                        <img
+                    <div className=" relative w-full lg:w-2/3">
+                        <Image
                             src={product.image}
                             alt={product.productName}
                             className="w-full h-96 object-cover rounded-md"
+                            fill
                         />
                     </div>
                     <div className="w-full lg:w-1/3 bg-white dark:bg-gray-800 shadow-lg p-6 rounded-lg">
@@ -49,7 +51,7 @@ export default function ProductDetail() {
                 <div className="flex flex-col space-y-3 w-full lg:w-2/3 mt-8">
                     <button
                         onClick={(e) => {
-                            addToCart({serialNumber, productName, price, image, description, brand});
+                            addToCart({ serialNumber, productName, price, image, description, brand });
                             handleClick(productName);
                         }}
                         className="btn btn-neutral text-white w-full"
