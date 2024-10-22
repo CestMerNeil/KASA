@@ -27,7 +27,7 @@ const Cart = () => {
                                 className="flex items-center bg-white dark:bg-gray-800 shadow-lg p-6 rounded-lg space-x-6"
                             >
                                 <div className="w-24 h-24 relative">
-                                    <Image
+                                    <img
                                         src={item.image}
                                         alt={item.productName}
                                         className="w-24 h-24 object-cover rounded-md"

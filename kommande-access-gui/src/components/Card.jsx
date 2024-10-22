@@ -49,9 +49,7 @@ export default function Card({ serialNumber, productName, price, image, descript
             </Link>
             <div className="card-body p-4">
                 <h2 className="card-title text-sm mb-2">{productName}</h2>
-                {/*
-                    <p className="text-gray-500 text-xs mb-3 line-clamp-2">{description}</p>
-                */}
+                <p className="text-gray-500 text-xs mb-3 line-clamp-2">{description}</p>
                 <div className="flex flex-col space-y-3">
                     <span className="text-lg font-bold" style={{ color: "rgb(255, 0, 0)" }}>${price}</span>
                     <button

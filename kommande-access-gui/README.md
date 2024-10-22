@@ -104,3 +104,23 @@ graph TD;
 
 by using Fuse.js, the search functionality allows users to search for products based on keywords. This document outlines the search functionality and how it interacts with the product data.
 
+# Google OAuth2 Integration
+```mermaid
+sequenceDiagram
+    participant User
+    participant Application
+    participant AuthorizationServer as Google Authorization Server
+    participant ResourceServer as Google API (Resource Server)
+
+    User->>Application: Request Login
+    Application->>AuthorizationServer: Redirect user for authorization
+    AuthorizationServer->>User: Request permission
+    User->>AuthorizationServer: Grant permission
+    AuthorizationServer->>Application: Return authorization code
+    Application->>AuthorizationServer: Exchange code for access token
+    AuthorizationServer->>Application: Return access and refresh tokens
+    Application->>ResourceServer: Use access token to access resources
+    ResourceServer->>Application: Return user data
+    Application->>AuthorizationServer: Refresh access token when expired
+    AuthorizationServer->>Application: Return new access token
+```
