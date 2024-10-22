@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("kommande-access-backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca18e20c7d1498461d804cd07d4e08ef17a1a1c7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+33ef4ca017c48bc2eed9bb26261aad524ed6dbcc")]
 [assembly: System.Reflection.AssemblyProductAttribute("kommande-access-backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("kommande-access-backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
