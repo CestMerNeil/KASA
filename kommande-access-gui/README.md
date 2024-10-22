@@ -1,7 +1,9 @@
-> ** Warning❗️:** This project is now totally hugging with yarn, so please use yarn to install the dependencies and run the project.
-> yarn install
-> yarn dev
-> yarn build
+> **Warning❗️:** This project is now totally hugging with yarn, so please use yarn to install the dependencies and run the project.
+>> yarn install
+>
+>> yarn dev
+>
+>> yarn build
 
 # Application Integration
 **Members : Ao XIE, Reynalde SEGERIE, Antoine Viton**

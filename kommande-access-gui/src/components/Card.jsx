@@ -1,4 +1,4 @@
-/**
+/*
  * @file        Card.js
  * @brief       Component to display a product card with image, name, description, and price.
  * @details     This Card component showcases a product's key details in a compact, responsive layout.
@@ -42,7 +42,8 @@ export default function Card({ serialNumber, productName, price, image, descript
                         src={image}
                         alt="Product image"
                         className="object-cover"
-                        layout="fill"
+                        fill
+                        sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw'
                     />
                 </div>
             </Link>

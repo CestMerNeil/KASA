@@ -144,12 +144,12 @@ export default function Login() {
                                     cursor: "pointer"
                                 }}
                             >
-                                <Image
+                                <img
                                     src="https://developers.google.com/identity/images/g-logo.png"
                                     alt="Google Logo"
                                     width={20}
                                     height={20}
-                                    style={{marginRight: "10px"}}
+                                    style={{ marginRight: "10px" }}
                                     className={"rounded-md"}
                                 />
                                 Sign in with Google

@@ -31,7 +31,7 @@ export default function ProductDetail() {
                 </h1>
                 <div className="flex flex-col lg:flex-row lg:justify-between gap-8">
                     <div className=" relative w-full lg:w-2/3">
-                        <Image
+                        <img
                             src={product.image}
                             alt={product.productName}
                             className="w-full h-96 object-cover rounded-md"
