@@ -22,43 +22,32 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Print working directory after checkout (for debugging)
-        run: pwd
 
-      - name: Change to the correct directory
+      - name: Change to the project directory
         run: cd kommande-access-gui
-
-      - name: List all files in kommande-access-gui directory (for debugging)
-        run: ls -la kommande-access-gui
-
-      - name: Detect package manager
-        run: |
-          if [ -f "kommande-access-gui/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "kommande-access-gui/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
+        
+      - name: Print Working Directory 
+        run: pwd
+      - name: Print Files
+        run: ls -lah
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
           node-version: "22.9.0"
           cache: yarn
+          cache-dependency-path: kommande-access-gui/yarn.lock
+          
+      - name: Print Working Directory 
+        run: pwd
+        
+      - name: Print Files
+        run: ls -lah
 
       - name: Install dependencies
-        run: ${{ env.manager }} ${{ env.command }}
-        #run: npm install
+        run: yarn install
         working-directory: kommande-access-gui
 
       - name: Build with Next.js
-        run: ${{ env.runner }} next build
+        run: yarn build
         working-directory: kommande-access-gui

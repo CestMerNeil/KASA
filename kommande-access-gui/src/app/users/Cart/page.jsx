@@ -1,33 +1,15 @@
-/**
- * @file        Cart.js
- * @brief       Shopping Cart Component with Cart Context and Total Calculation.
- * @details     This component displays a user's shopping cart with item details, including the product image, name, brand, model, and price.
- *              It also calculates and displays the total price of the items in the cart and allows users to remove items.
- *              If the cart is empty, a message is displayed to the user.
- *              The component uses CartContext to manage cart state and updates the total price whenever cart items change.
- * @returns     {JSX.Element} - A fully responsive shopping cart component with dynamic total price and item removal functionality.
- *****************************************************************
- * @component Details
- * - Displays a list of cart items, showing their product details such as image, name, brand, model, and price.
- * - Dynamically calculates and updates the total price whenever the cart content changes.
- * - Allows users to remove items from the cart by clicking the "Remove" button.
- * - Displays an order summary with the total number of items and total price.
- * - Offers a "Proceed to Checkout" button to navigate the user to the checkout process.
- *****************************************************************
- */
-
 'use client';
 
 import { useCart } from '@/components/CartContext';
-import { useEffect, useState } from 'react'
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const Cart = () => {
     const { cartItems, removeFromCart } = useCart();
     const [totalPrice, setTotalPrice] = useState(0);
 
+    // Calculer le prix total du panier
     useEffect(() => {
-        const total = cartItems.reduce((acc, item) => acc + item.price, 0);
+        const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
         setTotalPrice(total);
     }, [cartItems]);
 
@@ -56,7 +38,15 @@ const Cart = () => {
                                     <h2 className="text-xl font-semibold dark:text-white">{item.productName}</h2>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">Brand: {item.brand}</p>
                                     <p className="text-sm text-gray-500 dark:text-gray-400">Model: {item.model}</p>
-                                    <p className="text-lg font-bold text-blue-600 dark:text-blue-400">${item.price.toFixed(2)}</p>
+                                    <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                                        ${item.price.toFixed(2)}
+                                    </p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                        Quantité : {item.quantity}
+                                    </p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                        Total: ${(item.price * item.quantity).toFixed(2)}
+                                    </p>
                                 </div>
                                 <button
                                     onClick={() => removeFromCart(item.serialNumber)}
@@ -70,7 +60,9 @@ const Cart = () => {
                     <div className="w-full lg:w-1/3 bg-white dark:bg-gray-800 shadow-lg p-6 rounded-lg">
                         <h2 className="text-2xl font-semibold mb-4 dark:text-white">Order Summary</h2>
                         <div className="border-b pb-4 mb-4 dark:border-gray-700">
-                            <p className="text-lg dark:text-gray-300">Total Items: {cartItems.length}</p>
+                            <p className="text-lg dark:text-gray-300">
+                                Total Items: {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                            </p>
                             <p className="text-lg font-bold dark:text-gray-100">Total Price: ${totalPrice.toFixed(2)}</p>
                         </div>
                         <button className="btn btn-primary btn-block">Proceed to Checkout</button>
