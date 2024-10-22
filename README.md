@@ -44,3 +44,12 @@ With these features, the company expects to create a standout multimedia e-comme
 - **User Accounts**: Allows users to create an account, log in, and save their favorite products.
 - **Responsive Design**: The application will be responsive, ensuring a seamless experience on both desktop and mobile devices.
 - **Secure Payments**: Integrated with Stripe for secure payment processing.
+
+## Start the application
+````
+# install dependencies 
+npm install
+
+# run application
+npm run dev
+````
