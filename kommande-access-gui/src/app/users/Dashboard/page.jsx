@@ -24,10 +24,6 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 export default function Dashboard() {
     const [user, setUser] = useState(null);
 
-    if (signIn) {
-
-    }
-
     try {
         useEffect(() => {
             fetch('/api/getUser', {method: 'GET'})

@@ -5,9 +5,9 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ChatBot from "@/components/ChatBot";
-import {CartProvider} from "@/components/CartContext";
-import {DataProvider} from "@/components/DataContext";
-import {SessionProvider} from "next-auth/react";
+import { CartProvider } from "@/components/CartContext";
+import { DataProvider } from "@/components/DataContext";
+import { SessionProvider } from "next-auth/react";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -27,24 +27,26 @@ export const metadata = {
 };
 */
 
-export default function RootLayout({children}) {
+export default function RootLayout({ children }) {
 
     return (
         <html lang="en">
-        <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-        <SessionProvider>
-            <DataProvider>
-                <CartProvider>
-                    <Navbar/>
-                    {children}
-                    <Footer/>
-                    <ChatBot/>
-                </CartProvider>
-            </DataProvider>
-        </SessionProvider>
-        </body>
-        </html>
+            <body
+                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            >
+                <div data-theme="retro">
+                    <SessionProvider>
+                        <DataProvider>
+                            <CartProvider>
+                                <Navbar />
+                                {children}
+                                <Footer />
+                                <ChatBot />
+                            </CartProvider>
+                        </DataProvider>
+                    </SessionProvider>
+                </div>
+            </body>
+        </html >
     );
 }

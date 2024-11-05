@@ -52,9 +52,9 @@ export default function AdImages() {
                 <Image
                     src={images[currentImage]}
                     alt="Ad Image"
-                    layout={'fill'}
+                    fill
                     priority
-                    objectFit='cover'
+                    style={{ objectFit: 'cover' }}
                     className="absolute inset-0 w-full h-full"
                     quality={50} // For a higher LCP score, set quality to 50
                 />
