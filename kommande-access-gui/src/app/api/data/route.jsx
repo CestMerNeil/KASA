@@ -16,7 +16,7 @@
 
 export async function GET() {
     try {
-        const response = await fetch("http://localhost:5031/products");
+        const response = await fetch("http://localhost:5031/products", { cache: 'no-store' });
         const data = await response.json();
         console.log("=====================");
         console.log(data);
