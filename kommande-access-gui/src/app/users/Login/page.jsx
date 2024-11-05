@@ -1,163 +1,218 @@
-/**
- * @file        Login.js
- * @brief       User Login Component with Authentication and Navigation.
- * @details     This component allows users to log in by submitting their credentials. Upon successful login,
- *              it stores a token in localStorage and navigates the user to the dashboard. The component features
- *              form inputs for username and password, and handles login errors by displaying appropriate messages.
- *              A background image is displayed alongside the login form for a visually appealing layout.
- * @returns     {JSX.Element} - A login form component with authentication and navigation functionality.
- *****************************************************************
- * @component Details
- * - Uses `useState` to manage login state, username, password, and error messages.
- * - Uses `useEffect` to redirect the user to the dashboard if login is successful.
- * - Sends a POST request with the username and password to the `/api/user` endpoint to authenticate.
- * - On successful authentication, stores the token in localStorage and redirects to the dashboard.
- * - Displays error messages when the login process fails.
- *****************************************************************
- */
-
 'use client';
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
+import { LockIcon, UserIcon, MailIcon, Loader2 } from 'lucide-react';
 
 export default function Login() {
     const router = useRouter();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const { data: session, status } = useSession();
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    });
     const [error, setError] = useState('');
-    const { data: session, status } = useSession(); // Google 登录状态
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        // 如果用户已经通过 Google 登录，跳转到 Dashboard
         if (status === 'authenticated') {
             router.push('/users/Dashboard');
         }
     }, [status, router]);
 
-    // 表单登录处理
-    const handleLogin = async () => {
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
         setError('');
-        try {
-            if (username.trim() !== '' && password.trim() !== '') {
-                const res = await fetch('/api/user', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password }),
-                });
+    };
 
-                if (res.ok) {
-                    const data = await res.json();
-                    // 确保只在浏览器环境下访问 localStorage
-                    if (typeof window !== 'undefined') {
-                        localStorage.setItem('token', data.token);
-                    }
-                    router.push('/users/Dashboard'); // 登录成功后跳转
-                } else {
-                    const errorData = await res.json();
-                    setError(errorData.message || 'Error logging in.');
-                }
-            } else {
-                setError('Please enter a valid username and password.');
+    const handleCredentialsLogin = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError('');
+
+        try {
+            const result = await signIn('credentials', {
+                username: formData.username,
+                password: formData.password,
+                redirect: false,
+            });
+
+            if (result?.error) {
+                setError('Invalid credentials. Please try again.');
+            } else if (result?.ok) {
+                router.push('/users/Dashboard');
+                router.refresh(); // 刷新服务器组件
             }
         } catch (error) {
-            setError('Error logging in. Please try again later.');
-            console.error('Error logging in:', error);
+            setError('An error occurred during login. Please try again.');
+            console.error('Login error:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleGoogleLogin = async () => {
         try {
-            signIn('google', { callbackUrl: '/users/Dashboard', prompt: 'select_account' });
+            setIsLoading(true);
+            await signIn('google', {
+                callbackUrl: '/users/Dashboard',
+            });
         } catch (error) {
-            setError('Google sign in error. Please try again later.');
+            setError('Google sign in failed. Please try again.');
             console.error('Google sign in error:', error);
         }
     };
 
+    if (status === 'loading') {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+
     return (
-        <div className="flex flex-col items-center min-h-screen bg-base-200 p-2">
-            <div className="card w-[90%] max-w-none shadow-xl bg-base-100 p-6">
-                <div className="md:container md:mx-auto flex p-10">
-                    <div className="flex-1 relative w-32 p-5">
+        <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
+            <div className="w-full max-w-6xl mx-4 bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div className="grid md:grid-cols-2 gap-0">
+                    {/* Left - Image Section */}
+                    <div className="relative h-48 md:h-auto">
                         <Image
                             src="/imgLogin/login_1.jpg"
-                            alt="Login"
-                            priority
-                            className="absolute inset-0 w-full rounded-lg"
+                            alt="Login background"
                             fill
-                            quality={100}
+                            priority
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 50vw"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                     </div>
 
-                    <div className="flex-1 w-64 p-5">
-                        <div className="p-5 flex-1">
-                            <label className="input input-bordered flex items-center gap-2 p-5">
-                                Email
-                                <input
-                                    type="text"
-                                    className="grow"
-                                    placeholder="Username"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                />
-                            </label>
-                        </div>
-                        <div className="p-5">
-                            <label className="input input-bordered flex items-center gap-2 p-4">
-                                Password
-                                <input
-                                    type="password"
-                                    className="grow"
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            </label>
+                    {/* Right - Login Form Section */}
+                    <div className="p-6 md:p-12 space-y-6">
+                        <div className="text-center space-y-2">
+                            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                                Welcome Back
+                            </h1>
+                            <p className="text-slate-600">
+                                Sign in to continue to your account
+                            </p>
                         </div>
 
-                        <div className="items-center p-4">
+                        <form onSubmit={handleCredentialsLogin} className="space-y-4">
+                            <div className="space-y-4">
+                                <div className="relative">
+                                    <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        value={formData.username}
+                                        onChange={handleInputChange}
+                                        className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-500"
+                                        placeholder="Username or Email"
+                                        disabled={isLoading}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="relative">
+                                    <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        value={formData.password}
+                                        onChange={handleInputChange}
+                                        className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-500"
+                                        placeholder="Password"
+                                        disabled={isLoading}
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex items-center justify-between text-sm">
+                                <label className="flex items-center space-x-2">
+                                    <input
+                                        type="checkbox"
+                                        className="rounded border-gray-300 text-primary focus:ring-primary"
+                                    />
+                                    <span className="text-gray-600">Remember me</span>
+                                </label>
+
+                                <Link
+                                    href="/auth/forgot-password"
+                                    className="text-primary hover:text-primary/80 transition-colors"
+                                >
+                                    Forgot password?
+                                </Link>
+                            </div>
+
+                            {error && (
+                                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+                                    {error}
+                                </div>
+                            )}
+
                             <button
-                                className="btn btn-primary w-full"
-                                onClick={handleLogin}
-                                disabled={username.trim() === '' || password.trim() === ''}
+                                type="submit"
+                                disabled={isLoading}
+                                className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                             >
-                                Login
+                                {isLoading ? (
+                                    <>
+                                        <Loader2 className="animate-spin h-5 w-5" />
+                                        <span>Signing in...</span>
+                                    </>
+                                ) : (
+                                    <span>Sign in</span>
+                                )}
                             </button>
-                        </div>
 
-                        {error && <div className="text-red-500 p-4">{error}</div>}
+                            <div className="relative flex items-center justify-center">
+                                <div className="absolute inset-0 flex items-center">
+                                    <div className="w-full border-t border-gray-300" />
+                                </div>
+                                <div className="relative bg-white px-4">
+                                    <span className="text-sm text-gray-500">
+                                        Or continue with
+                                    </span>
+                                </div>
+                            </div>
 
-                        <div className="items-center p-4 rounded-md">
                             <button
+                                type="button"
                                 onClick={handleGoogleLogin}
-                                style={{
-                                    backgroundColor: "white",
-                                    border: "1px solid #ddd",
-                                    padding: "10px 15px",
-                                    fontSize: "16px",
-                                    borderRadius: "5px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    cursor: "pointer"
-                                }}
+                                disabled={isLoading}
+                                className="w-full bg-white hover:bg-gray-50 text-gray-700 font-semibold py-2.5 px-4 border border-gray-300 rounded-lg transition focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                             >
                                 <img
-                                    src="https://developers.google.com/identity/images/g-logo.png"
-                                    alt="Google Logo"
-                                    width={20}
-                                    height={20}
-                                    style={{ marginRight: "10px" }}
-                                    className={"rounded-md"}
+                                    src="/google.svg"
+                                    alt="Google"
+                                    className="w-5 h-5"
                                 />
-                                Sign in with Google
+                                <span>Sign in with Google</span>
                             </button>
-                        </div>
+                        </form>
+
+                        <p className="text-center text-gray-600 text-sm">
+                            Don't have an account?{' '}
+                            <Link
+                                href="/auth/register"
+                                className="text-primary hover:text-primary/80 font-semibold transition-colors"
+                            >
+                                Sign up
+                            </Link>
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
