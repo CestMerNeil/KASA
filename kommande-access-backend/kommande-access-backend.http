@@ -1,0 +1,6 @@
+@kommande_access_backend_HostAddress = http://localhost:5031
+
+GET {{kommande_access_backend_HostAddress}}/products
+Accept: application/json
+
+###

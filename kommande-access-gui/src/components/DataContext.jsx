@@ -11,7 +11,7 @@ export function DataProvider({ children }) {
         fetch('/api/data', { method: 'GET' })
             .then((res) => res.json())
             .then((data) => {
-                setProducts(data.products);
+                setProducts(data);
             })
             .catch(error => {
                 console.error('Error fetching products:', error);
