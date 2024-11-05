@@ -99,6 +99,136 @@ namespace kommande_access_backend.Migrations
                             ProductName = "Samsung Galaxy S23 Ultra",
                             SerialNumber = "SN10003",
                             Type = "phone"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Brand = "Amazon",
+                            Clicks = 1045,
+                            Description = "Amazon Kindle Paperwhite with 6-inch glare-free display, 8GB storage, and adjustable backlight.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/amazon-kindle-paperwhite.jpg",
+                            Model = "Paperwhite",
+                            Price = 129.99m,
+                            ProductName = "Amazon Kindle Paperwhite",
+                            SerialNumber = "SN10004",
+                            Type = "ebook"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Brand = "Apple",
+                            Clicks = 3247,
+                            Description = "Apple AirPods Pro with active noise cancellation, adaptive transparency, and spatial audio.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/apple-airpods-pro.png",
+                            Model = "AirPods Pro",
+                            Price = 249.99m,
+                            ProductName = "Apple AirPods Pro",
+                            SerialNumber = "SN10005",
+                            Type = "earbuds"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Brand = "ASUS",
+                            Clicks = 2841,
+                            Description = "ASUS ROG Zephyrus G14 gaming laptop with AMD Ryzen 9, NVIDIA GeForce RTX 3060, and 144Hz display.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/asus-rog-zephyrus-g14.jpg",
+                            Model = "ROG Zephyrus G14",
+                            Price = 1499.99m,
+                            ProductName = "ASUS ROG Zephyrus G14",
+                            SerialNumber = "SN10006",
+                            Type = "laptop"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Brand = "Bose",
+                            Clicks = 2305,
+                            Description = "Bose QuietComfort 45 noise-cancelling wireless headphones with up to 24 hours of battery life.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/bose-quietcomfort-45.jpeg",
+                            Model = "QuietComfort 45",
+                            Price = 329.99m,
+                            ProductName = "Bose QuietComfort 45",
+                            SerialNumber = "SN10007",
+                            Type = "headphones"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Brand = "Dell",
+                            Clicks = 1940,
+                            Description = "Dell XPS 13 laptop with 13.4-inch FHD+ display, Intel Core i7 processor, and 16GB RAM.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/dell-xps-13.jpg",
+                            Model = "XPS 13",
+                            Price = 1099.99m,
+                            ProductName = "Dell XPS 13",
+                            SerialNumber = "SN10008",
+                            Type = "laptop"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Brand = "Fitbit",
+                            Clicks = 2540,
+                            Description = "Fitbit Charge 5 fitness tracker with built-in GPS, heart rate monitor, and stress management tools.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/fitbit-charge-5.png",
+                            Model = "Charge 5",
+                            Price = 149.99m,
+                            ProductName = "Fitbit Charge 5",
+                            SerialNumber = "SN10009",
+                            Type = "wearable"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Brand = "Sony",
+                            Clicks = 8650,
+                            Description = "Sony PlayStation 5 console with 825GB storage, Ray Tracing, and 4K graphics capability.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/sony-playstation-5.jpg",
+                            Model = "PS5",
+                            Price = 499.99m,
+                            ProductName = "Sony PlayStation 5",
+                            SerialNumber = "SN10010",
+                            Type = "console"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Brand = "Google",
+                            Clicks = 1235,
+                            Description = "Google Pixel 7 Pro smartphone with Google Tensor G2, 6.7-inch QHD+ display, and 50MP camera.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/google-pixel-7-pro.jpg",
+                            Model = "Pixel 7 Pro",
+                            Price = 899.99m,
+                            ProductName = "Google Pixel 7 Pro",
+                            SerialNumber = "SN10011",
+                            Type = "phone"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Brand = "Microsoft",
+                            Clicks = 1475,
+                            Description = "Microsoft Surface Pro 9 tablet with 13-inch PixelSense display, Intel Core i5, and 8GB RAM.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/microsoft-surface-pro-9.jpg",
+                            Model = "Surface Pro 9",
+                            Price = 999.99m,
+                            ProductName = "Microsoft Surface Pro 9",
+                            SerialNumber = "SN10012",
+                            Type = "tablet"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Brand = "Meta",
+                            Clicks = 3450,
+                            Description = "Meta Oculus Quest 2 VR headset with 128GB storage and wireless standalone operation.",
+                            Image = "https://perso.isima.fr/~aoxie/KASA/oculus-quest-2.jpg",
+                            Model = "Quest 2",
+                            Price = 399.99m,
+                            ProductName = "Oculus Quest 2",
+                            SerialNumber = "SN10013",
+                            Type = "vr-headset"
                         });
                 });
 #pragma warning restore 612, 618
