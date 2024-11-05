@@ -140,11 +140,14 @@ export default function ChatBot() {
                             .map((m, i) => (
                                 <div
                                     key={i}
-                                    className={`p-3 ${m.role === 'assistant' ? 'bg-gray-100 dark:bg-gray-700' : 'bg-blue-100 dark:bg-blue-700'} rounded-lg w-3/4 ${m.role === 'user' ? 'ml-auto' : 'mr-auto'} text-sm`}
+                                    className={`chat ${m.role === 'assistant' ? 'chat-start' : 'chat-end'}`}
                                 >
-                                    {m.content}
+                                    <div className="chat-bubble chat-bubble-primary-content">
+                                        {m.content}
+                                    </div>
                                 </div>
                             ))}
+
                         <div ref={messagesEndRef} />
                     </div>
 
@@ -157,7 +160,7 @@ export default function ChatBot() {
                             className="input input-m input-bordered flex-grow w-auto mr-2 dark:bg-gray-900 dark:text-white"
                             onKeyDown={handleKeyDown}
                         />
-                        <button className="btn btn-primary btn-m" onClick={sendMessage}>
+                        <button className="btn btn-primary-content btn-m" onClick={sendMessage}>
                             Send
                         </button>
                     </div>

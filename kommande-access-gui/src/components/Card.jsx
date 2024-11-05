@@ -1,4 +1,4 @@
-/**
+/*
  * @file        Card.js
  * @brief       Component to display a product card with image, name, description, and price.
  * @details     This Card component showcases a product's key details in a compact, responsive layout.
@@ -19,12 +19,13 @@
  */
 
 
-import {useState} from 'react';
-import {useCart} from "@/components/CartContext";
+import { useState } from 'react';
+import { useCart } from "@/components/CartContext";
 import Link from 'next/link';
+import Image from 'next/image';
 
-export default function Card({serialNumber, productName, price, image, description, brand}) {
-    const {addToCart, cartItemCount} = useCart();
+export default function Card({ serialNumber, productName, price, image, description, brand }) {
+    const { addToCart, cartItemCount } = useCart();
     const [showToast, setShowToast] = useState(false);
 
     const handleClick = (productName) => {
@@ -36,24 +37,25 @@ export default function Card({serialNumber, productName, price, image, descripti
 
         <div className="card glass max-w-xs w-full text-xs p-2 shadow-md">
             <Link href={`/products/${serialNumber}`}>
-                <figure className="w-full h-40 overflow-hidden rounded-md">
-                    <img
+                <div className="relative w-full h-0 pb-[75%] overflow-hidden rounded-md">
+                    <Image
                         src={image}
-                        alt={'/testImgProduct.png'}
-                        className="w-full h-full object-cover"
-                        layout={'fill'}
+                        alt="Product image"
+                        className="object-cover"
+                        fill
+                        sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw'
                     />
-                </figure>
+                </div>
             </Link>
             <div className="card-body p-4">
                 <h2 className="card-title text-sm mb-2">{productName}</h2>
                 <p className="text-gray-500 text-xs mb-3 line-clamp-2">{description}</p>
                 <div className="flex flex-col space-y-3">
-                    <span className="text-lg font-bold" style={{color: "rgb(255, 0, 0)"}}>${price}</span>
+                    <span className="text-lg font-bold" style={{ color: "rgb(255, 0, 0)" }}>${price}</span>
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            addToCart({serialNumber, productName, price, image, description, brand});
+                            addToCart({ serialNumber, productName, price, image, description, brand });
                             handleClick(productName);
                         }}
                         className="btn btn-sm btn-neutral text-white"

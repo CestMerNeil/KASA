@@ -7,7 +7,7 @@
             "model": "MQ8P3CH/A",
             "description": "Apple iPhone 14 Pro Max with 6.7-inch Super Retina XDR display, A16 Bionic chip, and 48MP camera system.",
             "price": 1199.99,
-            "image": "https://static.digitecgalaxus.ch/Files/6/8/2/2/9/0/1/0/iPhone_14_Pro_Max_Gold_PDP_Image_Position-4__WWEN.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/iphone-14-pro-max.jpg",
             "clicks": 5634,
             "type": "phone"
         },
@@ -18,7 +18,7 @@
             "model": "MLY13CH/A",
             "description": "13.6-inch MacBook Air powered by M2 chip, featuring 8GB RAM and 256GB SSD storage.",
             "price": 999.99,
-            "image": "https://xstore.md/images/product/2022/06/Apple-Macbook-Air-M2-Midnight-1.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/macbook-air-m2.jpg",
             "clicks": 4270,
             "type": "laptop"
         },
@@ -29,7 +29,7 @@
             "model": "SM-S9180",
             "description": "Samsung Galaxy S23 Ultra with 6.8-inch QHD+ display, Snapdragon 8 Gen 2, and a 200MP quad-camera system.",
             "price": 1199.99,
-            "image": "https://cdn1.smartprix.com/rx-izLSMVlI0-w1200-h1200/zLSMVlI0.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/samsung-galaxy-s23-ultra.jpg",
             "clicks": 3321,
             "type": "phone"
         },
@@ -40,7 +40,7 @@
             "model": "WH1000XM5",
             "description": "Sony wireless noise-canceling headphones with up to 30 hours of battery life and industry-leading noise cancellation.",
             "price": 398.99,
-            "image": "https://static1.pocketnowimages.com/wordpress/wp-content/uploads/styles/xsmall/public/2022-05/PBI%20Sony%20WH1000%20XM5%20Black.png?itok=k1uA0Bg8",
+            "image": "https://perso.isima.fr/~aoxie/KASA/sony-wh-1000xm5.png",
             "clicks": 2783,
             "type": "accessory"
         },
@@ -51,7 +51,7 @@
             "model": "MP7P3CH/A",
             "description": "iPad Pro 12.9-inch with Liquid Retina XDR display and M2 chip, offering 128GB storage and Apple Pencil compatibility.",
             "price": 1099.99,
-            "image": "https://www.theiphonewiki.com/w/images/thumb/4/40/IPad_Pro_12.9-inch_6th_generation.png/600px-IPad_Pro_12.9-inch_6th_generation.png",
+            "image": "https://perso.isima.fr/~aoxie/KASA/ipad-pro-12_9-inch.png",
             "clicks": 3092,
             "type": "accessory"
         },
@@ -62,7 +62,7 @@
             "model": "9315",
             "description": "13.4-inch Dell XPS 13 laptop with Intel i7-1250U processor, 16GB RAM, and 512GB SSD storage.",
             "price": 1249.99,
-            "image": "https://microless.com/cdn/products/f026b0f0fb6302d095eda73e25215408-hi.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/dell-xps-13.jpg",
             "clicks": 1824,
             "type": "laptop"
         },
@@ -73,7 +73,7 @@
             "model": "11th Generation",
             "description": "Amazon Kindle Paperwhite with 6.8-inch glare-free display, adjustable warm light, and 10 weeks of battery life.",
             "price": 139.99,
-            "image": "https://cdn.arstechnica.net/wp-content/uploads/2018/11/kindle-paperwhite-2018.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/amazon-kindle-paperwhite.jpg",
             "clicks": 4210,
             "type": "accessory"
         },
@@ -84,7 +84,7 @@
             "model": "MQD83CH/A",
             "description": "Apple AirPods Pro with Active Noise Cancellation, Transparency mode, and personalized Spatial Audio.",
             "price": 249.99,
-            "image": "https://www.epic.com.mt/wp-content/uploads/2023/03/AirPods_Pro_2nd-Gen-1.png",
+            "image": "https://perso.isima.fr/~aoxie/KASA/apple-airpods-pro.png",
             "clicks": 5263,
             "type": "accessory"
         },
@@ -95,7 +95,7 @@
             "model": "GA03461-US",
             "description": "Google Pixel 7 Pro with 6.7-inch OLED display, Google Tensor G2 chip, and a 50MP triple-camera system.",
             "price": 899.99,
-            "image": "https://www.lowyat.net/wp-content/uploads/2022/10/google-pixel-pro-7-01.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/google-pixel-7-pro.jpg",
             "clicks": 2145,
             "type": "phone"
         },
@@ -106,7 +106,7 @@
             "model": "GA402RJ",
             "description": "14-inch ASUS ROG Zephyrus G14 gaming laptop with AMD Ryzen 9, 32GB RAM, and 1TB SSD.",
             "price": 1699.99,
-            "image": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6403/6403425ld.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/asus-rog-zephyrus-g14.jpg",
             "clicks": 3590,
             "type": "laptop"
         },
@@ -117,7 +117,7 @@
             "model": "QEZ-00001",
             "description": "13-inch Microsoft Surface Pro 9 with Intel Core i7, 16GB RAM, and 512GB SSD, detachable keyboard, and stylus compatibility.",
             "price": 1449.99,
-            "image": "https://cdn.neowin.com/news/images/uploaded/2022/10/1665393857_surface_pro_9_2.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/microsoft-surface-pro-9.jpg",
             "clicks": 2780,
             "type": "laptop"
         },
@@ -128,7 +128,7 @@
             "model": "QC45",
             "description": "Bose QuietComfort 45 wireless noise-canceling headphones with up to 24 hours of battery life and superior sound quality.",
             "price": 329.99,
-            "image": "https://assets.bose.com/content/dam/Bose_DAM/Web/consumer_electronics/global/products/headphones/qc45/product_silo_images/QC45_PDP_Ecom-Gallery-B04.jpg/jcr:content/renditions/cq5dam.web.1280.1280.jpeg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/bose-quietcomfort-45.jpeg",
             "clicks": 3125,
             "type": "accessory"
         },
@@ -139,7 +139,7 @@
             "model": "010-02063-00",
             "description": "Garmin Forerunner 945 premium GPS smartwatch with music, advanced performance metrics, and up to 2 weeks of battery life.",
             "price": 599.99,
-            "image": "https://www.bhphotovideo.com/images/images2500x2500/garmin_010_02063_00_forerunner_945_sport_watch_1476630.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/garmin-forerinner-945.jpg",
             "clicks": 2901,
             "type": "accessory"
         },
@@ -150,7 +150,7 @@
             "model": "M2102K1G",
             "description": "Xiaomi Mi 11 Ultra with 6.81-inch AMOLED display, Snapdragon 888 processor, and 50MP triple camera system.",
             "price": 1099.99,
-            "image": "https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1619672124.8878125.png",
+            "image": "https://perso.isima.fr/~aoxie/KASA/xiaomi-11-ultra.png",
             "clicks": 2330,
             "type": "phone"
         },
@@ -161,7 +161,7 @@
             "model": "13-aw0023dx",
             "description": "13.3-inch HP Spectre x360 convertible laptop with Intel Core i7-1065G7, 16GB RAM, and 512GB SSD storage.",
             "price": 1299.99,
-            "image": "https://images.idgesg.net/images/article/2018/10/hp-spectre-x360-15_darkashsilver_rearleft-100777622-orig.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/hp-spectre-x360.jpg",
             "clicks": 2950,
             "type": "laptop"
         },
@@ -172,7 +172,7 @@
             "model": "301-00351-02",
             "description": "Oculus Quest 2 VR headset with 128GB storage, wireless gameplay, and high-resolution display.",
             "price": 299.99,
-            "image": "https://images.idgesg.net/images/article/2020/09/quest-2-100857824-orig.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/oculus-quest-2.jpg",
             "clicks": 3705,
             "type": "accessory"
         },
@@ -183,7 +183,7 @@
             "model": "FB421SRBU",
             "description": "Fitbit Charge 5 advanced fitness tracker with heart rate monitor, built-in GPS, and up to 7 days of battery life.",
             "price": 149.99,
-            "image": "https://www.the-daily-story.com/wp-content/uploads/2021/08/charge5-black-device-3qtr.png",
+            "image": "https://perso.isima.fr/~aoxie/KASA/fitbit-charge-5.png",
             "clicks": 1780,
             "type": "accessory"
         },
@@ -194,7 +194,7 @@
             "model": "20XW004LUS",
             "description": "14-inch Lenovo ThinkPad X1 Carbon Gen 9 with Intel Core i7, 16GB RAM, and 1TB SSD storage.",
             "price": 1999.99,
-            "image": "https://lenovindo.com/wp-content/uploads/2019/06/Lenovo-Thinkpad-X1-Carbon-Gen-9.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/lenovo-thinkpad-x1-carbon-gen-9.jpg",
             "clicks": 3410,
             "type": "laptop"
         },
@@ -205,7 +205,7 @@
             "model": "NE2213",
             "description": "OnePlus 10 Pro with 6.7-inch AMOLED display, Snapdragon 8 Gen 1 processor, and 48MP triple camera system.",
             "price": 899.99,
-            "image": "https://assets.mspimages.in/wp-content/uploads/2021/11/ONEPLUS10PROCOMPLETE5K3_1636976852.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/oneplus-10-pro.jpg",
             "clicks": 2580,
             "type": "phone"
         },
@@ -216,7 +216,7 @@
             "model": "CFI-1102A",
             "description": "Sony PlayStation 5 gaming console with ultra-high-speed SSD, 4K gaming, and ray tracing support.",
             "price": 499.99,
-            "image": "https://cdn1.smartprix.com/rx-iONR62zZ0-w1200-h1200/ONR62zZ0.jpg",
+            "image": "https://perso.isima.fr/~aoxie/KASA/sony-playstation-5.jpg",
             "clicks": 8120,
             "type": "accessory"
         }

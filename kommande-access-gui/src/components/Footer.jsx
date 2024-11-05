@@ -23,7 +23,7 @@ export default function Footer() {
     return (
         <footer className="footer footer-left bg-base-300 text-base-content p-10 bottom-0 ">
             <aside>
-                <p>Copyright © {new Date().getFullYear()} - All right reserved by Ao XIE.</p>
+                <p>Copyright © {new Date().getFullYear()} - All right reserved by team KASA.</p>
             </aside>
         </footer>
     );
