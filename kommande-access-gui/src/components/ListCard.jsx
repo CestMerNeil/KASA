@@ -25,8 +25,9 @@ import Card from "@/components/Card";
 export default function ListCard({ type, products }) {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4 sm:p-6 lg:p-8">
-            {products.map((product, index) => {
-                // 在这里进行条件判断
+            {products && products.map((product, index) => {
+                console.log("Product type: ", product.type);
+                console.log(product);
                 if (type === "all" || product.type === type) {
                     return (
                         <Card
@@ -40,7 +41,7 @@ export default function ListCard({ type, products }) {
                         />
                     );
                 }
-                return null; // 如果条件不满足，返回 null
+                return null;
             })}
         </div>
     );

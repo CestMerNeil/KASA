@@ -6,6 +6,7 @@ const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
+    const [newCartItem, setNewCartItem] = useState(null);
 
     // Fonction pour ajouter un produit au panier
     const addToCart = (item) => {
@@ -19,6 +20,8 @@ export const CartProvider = ({ children }) => {
                 return [...prevItems, { ...item, quantity: 1 }];
             }
         });
+        setNewCartItem(item);
+        setTimeout(() => setNewCartItem(null), 1500);
     };
 
     // Fonction pour enlever une quantité d'un produit ou le retirer complètement
@@ -45,6 +48,13 @@ export const CartProvider = ({ children }) => {
     return (
         <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, cartItemCount }}>
             {children}
+            {newCartItem &&
+                <div className="toast toast-start">
+                    <div className="alert alert-neutral-content">
+                        <span>{newCartItem.productName} added to cart</span>
+                    </div>
+                </div>
+            }
         </CartContext.Provider>
     );
 };

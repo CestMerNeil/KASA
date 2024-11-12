@@ -18,8 +18,6 @@ export async function GET() {
     try {
         const response = await fetch("http://localhost:5031/products", { cache: 'no-store' });
         const data = await response.json();
-        console.log("=====================");
-        console.log(data);
         return new Response(JSON.stringify(data), { status: 200 });
     } catch (error) {
         return new Response(JSON.stringify({ error: error.message }), { status: 500 });
