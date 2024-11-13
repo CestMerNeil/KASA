@@ -26,8 +26,6 @@ export default function ListCard({ type, products }) {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4 sm:p-6 lg:p-8">
             {products && products.map((product, index) => {
-                console.log("Product type: ", product.type);
-                console.log(product);
                 if (type === "all" || product.type === type) {
                     return (
                         <Card
@@ -38,6 +36,7 @@ export default function ListCard({ type, products }) {
                             image={product.image}
                             description={product.description}
                             brand={product.brand}
+                            model={product.model}
                         />
                     );
                 }

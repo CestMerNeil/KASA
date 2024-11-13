@@ -24,7 +24,7 @@ import { useCart } from "@/components/CartContext";
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function Card({ serialNumber, productName, price, image, description, brand }) {
+export default function Card({ serialNumber, productName, price, image, description, brand, model }) {
     const { addToCart, cartItemCount } = useCart();
 
     return (
@@ -49,7 +49,7 @@ export default function Card({ serialNumber, productName, price, image, descript
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            addToCart({ serialNumber, productName, price, image, description, brand });
+                            addToCart({ serialNumber, productName, price, image, description, brand, model });
                         }}
                         className="btn btn-sm btn-neutral text-white"
                     >
