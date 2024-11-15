@@ -5,23 +5,33 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
-import { LockIcon, UserIcon, MailIcon, Loader2 } from 'lucide-react';
+import { LockIcon, MailIcon, Loader2 } from 'lucide-react';
+import { useUser } from '@/components/UserContext';
 
 export default function Login() {
     const router = useRouter();
     const { data: session, status } = useSession();
     const [formData, setFormData] = useState({
-        username: '',
+        email: '',
         password: ''
     });
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const { userLoggedIn } = useUser();
 
     useEffect(() => {
         if (status === 'authenticated') {
+            const userData = {
+                id: session.id,
+                username: session.username,
+                email: session.user.email,
+                name: session.user.name,
+                image: session.user.image,
+            };
+            userLoggedIn(userData);
             router.push('/users/Dashboard');
         }
-    }, [status, router]);
+    }, [status]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -39,7 +49,7 @@ export default function Login() {
 
         try {
             const result = await signIn('credentials', {
-                username: formData.username,
+                email: formData.email,
                 password: formData.password,
                 redirect: false,
             });
@@ -47,6 +57,14 @@ export default function Login() {
             if (result?.error) {
                 setError('Invalid credentials. Please try again.');
             } else if (result?.ok) {
+                const userData = {
+                    id: result.id,
+                    username: result.username,
+                    email: result.user.email,
+                    name: result.user.name,
+                    image: result.user.image,
+                };
+                userLoggedIn(userData);
                 router.push('/users/Dashboard');
                 router.refresh(); // 刷新服务器组件
             }
@@ -64,9 +82,17 @@ export default function Login() {
             await signIn('google', {
                 callbackUrl: '/users/Dashboard',
             });
+            if (result?.error) {
+                setError('Google sign in failed. Please try again.');
+            } else if (result?.ok) {
+                router.push('/users/Dashboard');
+                router.refresh(); // 刷新服务器组件
+            }
         } catch (error) {
             setError('Google sign in failed. Please try again.');
             console.error('Google sign in error:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -109,14 +135,14 @@ export default function Login() {
                         <form onSubmit={handleCredentialsLogin} className="space-y-4">
                             <div className="space-y-4">
                                 <div className="relative">
-                                    <UserIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                                    <MailIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                                     <input
                                         type="text"
-                                        name="username"
-                                        value={formData.username}
+                                        name="email"
+                                        value={formData.email}
                                         onChange={handleInputChange}
                                         className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-transparent placeholder:text-gray-500"
-                                        placeholder="Username or Email"
+                                        placeholder="Email"
                                         disabled={isLoading}
                                         required
                                     />
@@ -193,7 +219,7 @@ export default function Login() {
                                 className="w-full bg-white hover:bg-gray-50 text-gray-700 font-semibold py-2.5 px-4 border border-gray-300 rounded-lg transition focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                             >
                                 <img
-                                    src="/google.svg"
+                                    src="/icons/google.svg"
                                     alt="Google"
                                     className="w-5 h-5"
                                 />

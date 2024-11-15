@@ -21,10 +21,12 @@ import Image from 'next/image';
 
 import React from 'react';
 import { useCart } from './CartContext';
+import { useUser } from './UserContext';
 
 const Navbar = () => {
 
     const { cartItemCount } = useCart();
+    const { user } = useUser();
 
     return (
         <div className="navbar bg-base-100">
@@ -104,13 +106,31 @@ const Navbar = () => {
                             </svg>
                         </Link>
                     </div>
-                    <Link href="/users/Login" className="btn btn-ghost btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                            stroke="currentColor" className="size-6">
-                            <path strokeLinecap="round" strokeLinejoin="round"
-                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                        </svg>
-                    </Link>
+                    {user ? (
+                        <Link href="/users/Dashboard" className="btn btn-ghost btn-sm">
+                            {user.image ? (
+                                <Image
+                                    src={user.image}
+                                    alt="User Avatar"
+                                    className="w-6 h-6 rounded-full"
+                                    width={24}
+                                    height={24}
+                                />
+                            ) : (
+                                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-content">
+                                    {user.name?.charAt(0).toUpperCase() || 'U'}
+                                </div>
+                            )}
+                        </Link>
+                    ) : (
+                        <Link href="/users/Login" className="btn btn-ghost btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                                stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>
