@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const UserContext = createContext();
@@ -8,12 +8,25 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
-    const userLoggedIn = (userData) => {
-        setUser(userData);
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    const userLoggedIn = async (userData) => {
+        try {
+            setUser(userData);
+            sessionStorage.setItem('user', JSON.stringify(userData));
+        } catch (error) {
+            console.error('Error logging in user:', error);
+        }
     };
 
     const userLoggedOut = () => {
         setUser(null);
+        sessionStorage.removeItem('user');
     };
 
     const value = {

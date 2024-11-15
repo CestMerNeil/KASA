@@ -18,39 +18,47 @@
 
 'use client';
 
-import {useState, useEffect} from 'react';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { useUser } from '@/components/UserContext';
+import { signOut } from 'next-auth/react';
 
 export default function Dashboard() {
-    const [user, setUser] = useState(null);
-
-    try {
-        useEffect(() => {
-            fetch('/api/getUser', {method: 'GET'})
-                .then((response) => response.json())
-                .then((data) => {
-                    setUser(data);
-                    console.log(data);
-                })
-                .catch((error) => console.error(error));
-        }, [])
-    } catch (error) {
-        console.error('Error fetching user data:', error);
-    }
+    const { user } = useUser();
 
     return (
-        <div>
-            <h1>Welcome, {user?.name}!</h1>
-            <p>Your email is: {user?.email}</p>
-            <p>Your phone number is: {user?.phone}</p>
-            <button
-                onClick={() => {
-                    signOut({callbackUrl: '/users/Login'});
-                    window.location.href = "https://accounts.google.com/Logout";
-                }}>
-                Sign Out
-            </button>
-
+        <div className="min-h-screen bg-base-200 flex items-center justify-center">
+            <div className="card w-full max-w-md shadow-xl bg-base-100">
+                <div className="card-body items-center text-center">
+                    {/* 用户头像 */}
+                    <div className="avatar">
+                        <div className="w-24 rounded-full">
+                            <img src={user?.image || '/default-avatar.png'} alt="User Avatar" />
+                        </div>
+                    </div>
+                    {/* 欢迎信息 */}
+                    <h2 className="card-title text-2xl font-bold mt-4">
+                        Welcome, {user?.name || 'User'}!
+                    </h2>
+                    {/* 用户信息 */}
+                    <p className="text-base">
+                        Your E-mail： {user?.email || 'N/A'}
+                    </p>
+                    <p className="text-base">
+                        Your Phone Number： {user?.phone || 'N/A'}
+                    </p>
+                    {/* 操作按钮 */}
+                    <div className="card-actions mt-6">
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => {
+                                sessionStorage.removeItem('user');
+                                signOut({ callbackUrl: '/users/Login' });
+                            }}
+                        >
+                            Sign Out
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

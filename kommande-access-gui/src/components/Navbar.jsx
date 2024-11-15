@@ -108,9 +108,9 @@ const Navbar = () => {
                     </div>
                     {user ? (
                         <Link href="/users/Dashboard" className="btn btn-ghost btn-sm">
-                            {user.avatar ? (
+                            {user.image ? (
                                 <Image
-                                    src={user.avatar}
+                                    src={user.image}
                                     alt="User Avatar"
                                     className="w-6 h-6 rounded-full"
                                     width={24}
