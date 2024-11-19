@@ -2,7 +2,11 @@
 
 import { useCart } from '@/components/CartContext';
 import { useEffect, useState } from 'react';
-import { SquareChevronLeft, SquareChevronRight, ShoppingBag, Trash2 } from 'lucide-react';
+import {
+    ShoppingBag,
+    CirclePlus,
+    CircleMinus
+} from 'lucide-react';
 import Link from 'next/link';
 
 const Cart = () => {
@@ -75,7 +79,7 @@ const Cart = () => {
                                                     onClick={() => removeFromCart(item.serialNumber)}
                                                     className="p-1 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                                                 >
-                                                    <SquareChevronLeft className="w-5 h-5" />
+                                                    <CircleMinus className="w-5 h-5" />
                                                 </button>
                                                 <span className="w-12 text-center font-medium dark:text-white">
                                                     {item.quantity}
@@ -84,7 +88,7 @@ const Cart = () => {
                                                     onClick={() => addToCart(item)}
                                                     className="p-1 rounded-lg border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                                                 >
-                                                    <SquareChevronRight className="w-5 h-5" />
+                                                    <CirclePlus className="w-5 h-5" />
                                                 </button>
                                             </div>
                                             <div className="text-right">
