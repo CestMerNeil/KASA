@@ -1,5 +1,6 @@
 using kommande_auth_backend.Data;
 using kommande_auth_backend.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/user", async (AppDbContext db, string name) =>
+app.MapGet("/user", async ([FromBody] AppDbContext db, [FromQuery] string name)=>
 {
     // Recherchez un utilisateur avec le mot de passe haché fourni
     //var hashedPassword = HashPassword(password); // Méthode de hachage à définir
