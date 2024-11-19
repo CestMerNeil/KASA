@@ -12,27 +12,19 @@ public class AppDbContext : DbContext
         
     }
 
-    public void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>(entity => entity.HasKey(u => u.Id));
-
-        modelBuilder.Entity<User>().HasData(
-            new GoogleUser
-            {
-                Id = "1",
-                Name = "Antoine",
-                Email = "antoine.viton@etu.uca.fr",
-                PhoneNumber = "0600000000",
-                Image=""
-            },
-            new BasicUser
-            {
-                Id = "2",
-                Name = "Reynalde",
-                Email = "test@test.com",
-                Password = "test",
-                PhoneNumber = "0611111111"
-            }
-        );
+        modelBuilder.Entity<User>(
+            entity =>
+            { 
+                entity.HasKey(u => u.Id);
+                entity.HasIndex(u => u.Name).IsUnique();
+            });
+        
+        modelBuilder.Entity<User>()
+            .HasDiscriminator<string>("type")  
+            .HasValue<User>("User")  
+            .HasValue<BasicUser>("BasicUser") 
+            .HasValue<GoogleUser>("GoogleUser"); 
     }
 }

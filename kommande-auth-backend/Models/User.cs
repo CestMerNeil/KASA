@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace kommande_auth_backend.Models;
@@ -7,6 +9,8 @@ namespace kommande_auth_backend.Models;
 [JsonDerivedType(typeof(GoogleUser), "GoogleUser")]
 public class User
 {
+    [Key] 
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
     public string Id { get; set; }
     public string Name { get; set; }
     public string Email { get; set; }

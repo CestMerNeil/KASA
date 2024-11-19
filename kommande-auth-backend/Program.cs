@@ -10,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// SQLite
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,7 +23,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/user", async ([FromBody] AppDbContext db, [FromQuery] string name)=>
+app.MapGet("/user", async (AppDbContext db, [FromQuery] string name)=>
 {
     // Recherchez un utilisateur avec le mot de passe haché fourni
     //var hashedPassword = HashPassword(password); // Méthode de hachage à définir
@@ -28,12 +32,26 @@ app.MapGet("/user", async ([FromBody] AppDbContext db, [FromQuery] string name)=
     return user is not null ? Results.Ok(user) : Results.NotFound("User not found");
 });
 
+app.MapPost("/user", async (AppDbContext db, [FromBody] User user) =>
+{
+    db.Users.Add(user);
+    await db.SaveChangesAsync();
+
+    return Results.Created($"/user/{user.Id}", user);
+});
+
 /*string HashPassword(string password)
 {
     using var sha256 = SHA256.Create();
     byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
     return Convert.ToBase64String(hashedBytes);
 }*/
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();  // Appliquer les migrations et créer la BDD si elle n'existe pas
+}
 
 app.UseHttpsRedirection();
 

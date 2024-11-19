@@ -12,7 +12,7 @@ namespace kommande_auth_backend.Data
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
             // Configure ici votre chaîne de connexion
-            optionsBuilder.UseSqlite("Data Source=/home/viton/Documents/ISIMA/ZZ3/KASA/kommande-access-backend/products.db");
+            optionsBuilder.UseSqlite("Data Source=../kommande-access-backend/products.db");
 
             return new AppDbContext(optionsBuilder.Options);
         }
