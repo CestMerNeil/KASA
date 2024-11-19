@@ -1,13 +1,63 @@
 # KASA - Web Application for Multimedia Product Management
+[![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white&style=flat-square)](https://nextjs.org/)
+[![Daisy UI](https://img.shields.io/badge/Daisy%20UI-5A0EF8?logo=daisyui&logoColor=white&style=flat-square)](https://daisyui.com/)
+[![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=white&style=flat-square)](https://dotnet.microsoft.com/)
 
-## Project Overview
+## Table of Contents
+- [KASA - Web Application for Multimedia Product Management](#kasa---web-application-for-multimedia-product-management)
+  - [Table of Contents](#table-of-contents)
+  - [Background](#background)
+  - [Technical Stack](#technical-stack)
+  - [Install](#install)
+    - [Frontend (Next.js)](#frontend-nextjs)
+    - [Backend (.NET)](#backend-net)
+  - [Context of Use](#context-of-use)
+  - [Features](#features)
+  - [Contributors](#contributors)
+  - [License](#license)
 
-KASA is a multimedia company that aims to implement a user-friendly web-based platform to manage and display its catalog of multimedia products such as PCs, mobile phones, tablets, and more. This project is focused on delivering a robust system that meets the company's business needs and enhances the overall customer experience.
+## Background
 
-## Team Members
-- **XIE Ao**
-- **SEGERIE Reynalde**
-- **VITON Antoine**
+KASA is a multimedia company aiming to create a user-friendly web platform for managing and showcasing its multimedia product catalog, including PCs, mobile phones, tablets, and more. This project focuses on developing a robust system that fulfills the company’s business requirements while enhancing the customer experience.
+
+## Technical Stack
+
+- **Frontend:** [Next.js](https://nextjs.org/)
+- **Backend:** [.NET](https://dotnet.microsoft.com/)
+- **Database:** TODO
+- **Authentication:** [NextAuth.js](https://next-auth.js.org/)
+- **Payment Processing:** [Stripe](https://stripe.com/)
+- **Styling:** [Daisy UI](https://daisyui.com/)
+- **Deployment:** [Vercel](https://vercel.com/)
+
+## Install
+
+### Frontend (Next.js)
+
+- To install dependencies:
+   ```zsh
+   yarn install
+   ```
+- To run the application:
+   ```zsh
+   yarn dev
+   ```
+
+### Backend (.NET)
+
+- Ensure you have the [.NET SDK](https://dotnet.microsoft.com/download) installed. You can ckheck by running:
+   ```zsh
+   dotnet --version
+   ```
+- To build the project:
+   ```zsh
+   dotnet build
+   ```
+- To run the project:
+   ```zsh
+   dotnet run
+   ```
+
 
 ## Context of Use
 
@@ -30,12 +80,7 @@ We, the development team, are tasked with building this platform for KASA. The c
 
 With these features, the company expects to create a standout multimedia e-commerce platform that not only showcases its products but also strengthens relationships with customers.
 
-## Technical Stack
 
-- **Frontend**: Next.js (React-based framework for building user interfaces)
-- **Backend**: TODO
-- **Database**: TODO
-- **Payment Integration**: Stripe (for processing online transactions)
 
 ## Features
 
@@ -45,11 +90,19 @@ With these features, the company expects to create a standout multimedia e-comme
 - **Responsive Design**: The application will be responsive, ensuring a seamless experience on both desktop and mobile devices.
 - **Secure Payments**: Integrated with Stripe for secure payment processing.
 
-## Start the application
-````
-# install dependencies 
-npm install
+## Contributors
+- **XIE Ao**
+- **SEGERIE Reynalde**
+- **VITON Antoine**
 
-# run application
-npm run dev
-````
+<a href="https://github.com/CestMerNeil/KASA/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=CestMerNeil/KASA" />
+</a>
+<p>
+<a href="https://github.com/CestMerNeil/KASA/graphs/contributors">View contributors</a>
+
+## License
+TODO
+```
+To be continued...
+```

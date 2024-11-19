@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <div data-theme="retro">
+                <div data-theme="light">
                     <SessionProvider>
                         <UserProvider>
                             <DataProvider>

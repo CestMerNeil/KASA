@@ -11,13 +11,13 @@ import { useUser } from '@/components/UserContext';
 export default function Login() {
     const router = useRouter();
     const { data: session, status } = useSession();
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const { userLoggedIn } = useUser();
     const [formData, setFormData] = useState({
         email: '',
         password: ''
     });
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const { userLoggedIn } = useUser();
 
     useEffect(() => {
         if (status === 'authenticated') {
@@ -83,13 +83,13 @@ export default function Login() {
                 callbackUrl: '/users/Dashboard',
             });
             if (result?.error) {
-                setError('Google sign in failed. Please try again.');
+                //setError('Google sign in failed. Please try again.');
             } else if (result?.ok) {
                 router.push('/users/Dashboard');
                 router.refresh(); // 刷新服务器组件
             }
         } catch (error) {
-            setError('Google sign in failed. Please try again.');
+            //setError('Google sign in failed. Please try again.');
             console.error('Google sign in error:', error);
         } finally {
             setIsLoading(false);

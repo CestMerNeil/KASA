@@ -1,3 +1,7 @@
+[![English](https://cdn3.iconfinder.com/data/icons/142-mini-country-flags-16x16px/32/flag-usa2x.png)](/README.md)
+[![Français](https://cdn3.iconfinder.com/data/icons/142-mini-country-flags-16x16px/32/flag-france2x.png)](/README/README_fr_FR.md)
+
+
 > **Warning❗️:** This project is now totally hugging with yarn, so please use yarn to install the dependencies and run the project.
 >> yarn install
 >
@@ -123,4 +127,37 @@ sequenceDiagram
     ResourceServer->>Application: Return user data
     Application->>AuthorizationServer: Refresh access token when expired
     AuthorizationServer->>Application: Return new access token
+```
+
+
+# User Connection Workflow
+```mermaid
+sequenceDiagram
+    participant User
+    participant Frontend
+    participant Backend
+    participant Database
+
+    User ->> Frontend: Submit credentials
+    Frontend ->> Backend: Send credentials
+    Backend ->> Database: Verify credentials
+    Database ->> Backend: Verification result
+    alt Valid credentials
+        Backend ->> Frontend: Return access token (JWT)
+        Frontend ->> User: Authentication successful
+    else Invalid credentials
+        Backend ->> Frontend: Authentication error
+        Frontend ->> User: Error message
+    end
+
+    User ->> Frontend: Request protected resource
+    Frontend ->> Backend: Send request with token
+    Backend ->> Backend: Verify token (JWT)
+    alt Valid token
+        Backend ->> Frontend: Return resource
+        Frontend ->> User: Display resource
+    else Invalid or expired token
+        Backend ->> Frontend: Authentication error
+        Frontend ->> User: Prompt for re-login
+    end
 ```
