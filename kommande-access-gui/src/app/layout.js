@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import ChatBot from "@/components/ChatBot";
 import { CartProvider } from "@/components/CartContext";
 import { DataProvider } from "@/components/DataContext";
+import { UserProvider } from "@/components/UserContext";
 import { SessionProvider } from "next-auth/react";
 
 const geistSans = localFont({
@@ -36,14 +37,16 @@ export default function RootLayout({ children }) {
             >
                 <div data-theme="retro">
                     <SessionProvider>
-                        <DataProvider>
-                            <CartProvider>
-                                <Navbar />
-                                {children}
-                                <Footer />
-                                <ChatBot />
-                            </CartProvider>
-                        </DataProvider>
+                        <UserProvider>
+                            <DataProvider>
+                                <CartProvider>
+                                    <Navbar />
+                                    {children}
+                                    <Footer />
+                                    <ChatBot />
+                                </CartProvider>
+                            </DataProvider>
+                        </UserProvider>
                     </SessionProvider>
                 </div>
             </body>

@@ -24,14 +24,8 @@ import { useCart } from "@/components/CartContext";
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function Card({ serialNumber, productName, price, image, description, brand }) {
+export default function Card({ serialNumber, productName, price, image, description, brand, model }) {
     const { addToCart, cartItemCount } = useCart();
-    const [showToast, setShowToast] = useState(false);
-
-    const handleClick = (productName) => {
-        setShowToast(true);
-        setTimeout(() => setShowToast(false), 1500);
-    };
 
     return (
 
@@ -55,8 +49,7 @@ export default function Card({ serialNumber, productName, price, image, descript
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            addToCart({ serialNumber, productName, price, image, description, brand });
-                            handleClick(productName);
+                            addToCart({ serialNumber, productName, price, image, description, brand, model });
                         }}
                         className="btn btn-sm btn-neutral text-white"
                     >
@@ -64,15 +57,6 @@ export default function Card({ serialNumber, productName, price, image, descript
                     </button>
                 </div>
             </div>
-
-            {/* Conditionally render Toast */}
-            {showToast && (
-                <div className='toast toast-center toast-middle'>
-                    <div className='alert alert-info'>
-                        {productName} added to cart.
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
