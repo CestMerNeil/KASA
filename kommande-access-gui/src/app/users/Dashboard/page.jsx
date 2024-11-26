@@ -29,11 +29,11 @@ export default function Dashboard() {
             if (!session?.user) return;
 
             try {
-                const response = await fetch('https://your-api.com/user', {
+                const response = await fetch('https://your-api.com/user?name=${encodeURIComponent(session.user.name)}`', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization: `Bearer ${session.user.token}`, // Use token from session
+                        //Authorization: `Bearer ${session.user.token}`, // Use token from session
                     },
                 });
 
