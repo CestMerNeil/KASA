@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -8,8 +8,12 @@ import { signIn, useSession } from 'next-auth/react';
 import { LockIcon, MailIcon, Loader2 } from 'lucide-react';
 import { useUser } from '@/components/UserContext';
 
+/**
+ * Login page component that handles both traditional and Google OAuth login
+ */
 export default function Login() {
     const router = useRouter();
+<<<<<<< Updated upstream
     const { data: session, status } = useSession();
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -17,27 +21,29 @@ export default function Login() {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
+=======
+    const { status } = useSession();
+    const { userLoggedIn } = useUser();
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+>>>>>>> Stashed changes
     });
 
-    useEffect(() => {
-        if (status === 'authenticated') {
-            const userData = {
-                id: session.id,
-                username: session.username,
-                email: session.user.email,
-                name: session.user.name,
-                image: session.user.image,
-            };
-            userLoggedIn(userData);
-            router.push('/users/Dashboard');
-        }
-    }, [status]);
+    // Redirect if already authenticated
+    if (status === 'authenticated') {
+        router.push('/users/Dashboard');
+        return null;
+    }
 
+    // Handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
-            [name]: value
+            [name]: value,
         }));
         setError('');
     };
@@ -49,24 +55,15 @@ export default function Login() {
 
         try {
             const result = await signIn('credentials', {
+                redirect: false,
                 email: formData.email,
                 password: formData.password,
-                redirect: false,
             });
 
-            if (result?.error) {
-                setError('Invalid credentials. Please try again.');
-            } else if (result?.ok) {
-                const userData = {
-                    id: result.id,
-                    username: result.username,
-                    email: result.user.email,
-                    name: result.user.name,
-                    image: result.user.image,
-                };
-                userLoggedIn(userData);
+            if (result.error) {
+                setError('Invalid email or password. Please try again.');
+            } else {
                 router.push('/users/Dashboard');
-                router.refresh(); // 刷新服务器组件
             }
         } catch (error) {
             setError('An error occurred during login. Please try again.');
@@ -76,12 +73,16 @@ export default function Login() {
         }
     };
 
+    // Handle Google login
     const handleGoogleLogin = async () => {
+        setIsLoading(true);
+        setError('');
+
         try {
-            setIsLoading(true);
             await signIn('google', {
-                callbackUrl: '/users/Dashboard',
+                callbackUrl: '/users/Dashboard'
             });
+<<<<<<< Updated upstream
             if (result?.error) {
                 //setError('Google sign in failed. Please try again.');
             } else if (result?.ok) {
@@ -92,10 +93,16 @@ export default function Login() {
             //setError('Google sign in failed. Please try again.');
             console.error('Google sign in error:', error);
         } finally {
+=======
+        } catch (error) {
+            setError('An error occurred during Google sign-in. Please try again.');
+            console.error('Google sign-in error:', error);
+>>>>>>> Stashed changes
             setIsLoading(false);
         }
     };
 
+    // Show loading state while checking authentication
     if (status === 'loading') {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -123,6 +130,7 @@ export default function Login() {
 
                     {/* Right - Login Form Section */}
                     <div className="p-6 md:p-12 space-y-6">
+                        {/* Header */}
                         <div className="text-center space-y-2">
                             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
                                 Welcome Back
@@ -132,12 +140,14 @@ export default function Login() {
                             </p>
                         </div>
 
-                        <form onSubmit={handleCredentialsLogin} className="space-y-4">
+                        {/* Login Form */}
+                        <form className="space-y-4" onSubmit={handleCredentialsLogin}>
                             <div className="space-y-4">
+                                {/* Email Input */}
                                 <div className="relative">
                                     <MailIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                                     <input
-                                        type="text"
+                                        type="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
@@ -148,6 +158,7 @@ export default function Login() {
                                     />
                                 </div>
 
+                                {/* Password Input */}
                                 <div className="relative">
                                     <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                                     <input
@@ -163,6 +174,7 @@ export default function Login() {
                                 </div>
                             </div>
 
+                            {/* Remember Me and Forgot Password */}
                             <div className="flex items-center justify-between text-sm">
                                 <label className="flex items-center space-x-2">
                                     <input
@@ -180,12 +192,14 @@ export default function Login() {
                                 </Link>
                             </div>
 
+                            {/* Error Message */}
                             {error && (
                                 <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
                                     {error}
                                 </div>
                             )}
 
+                            {/* Sign In Button */}
                             <button
                                 type="submit"
                                 disabled={isLoading}
@@ -201,6 +215,7 @@ export default function Login() {
                                 )}
                             </button>
 
+                            {/* Divider */}
                             <div className="relative flex items-center justify-center">
                                 <div className="absolute inset-0 flex items-center">
                                     <div className="w-full border-t border-gray-300" />
@@ -212,21 +227,29 @@ export default function Login() {
                                 </div>
                             </div>
 
+                            {/* Google Sign In Button */}
                             <button
                                 type="button"
                                 onClick={handleGoogleLogin}
                                 disabled={isLoading}
                                 className="w-full bg-white hover:bg-gray-50 text-gray-700 font-semibold py-2.5 px-4 border border-gray-300 rounded-lg transition focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                             >
-                                <img
-                                    src="/icons/google.svg"
-                                    alt="Google"
-                                    className="w-5 h-5"
-                                />
-                                <span>Sign in with Google</span>
+                                {isLoading ? (
+                                    <Loader2 className="animate-spin h-5 w-5" />
+                                ) : (
+                                    <img
+                                        src="/icons/google.svg"
+                                        alt="Google"
+                                        className="w-5 h-5"
+                                    />
+                                )}
+                                <span>
+                                    {isLoading ? 'Signing in with Google...' : 'Sign in with Google'}
+                                </span>
                             </button>
                         </form>
 
+                        {/* Sign Up Link */}
                         <p className="text-center text-gray-600 text-sm">
                             Don't have an account?{' '}
                             <Link
