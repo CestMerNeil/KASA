@@ -13,15 +13,6 @@ import { useUser } from '@/components/UserContext';
  */
 export default function Login() {
     const router = useRouter();
-<<<<<<< Updated upstream
-    const { data: session, status } = useSession();
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const { userLoggedIn } = useUser();
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-=======
     const { status } = useSession();
     const { userLoggedIn } = useUser();
     const [error, setError] = useState('');
@@ -29,7 +20,6 @@ export default function Login() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
->>>>>>> Stashed changes
     });
 
     // Redirect if already authenticated
@@ -82,22 +72,9 @@ export default function Login() {
             await signIn('google', {
                 callbackUrl: '/users/Dashboard'
             });
-<<<<<<< Updated upstream
-            if (result?.error) {
-                //setError('Google sign in failed. Please try again.');
-            } else if (result?.ok) {
-                router.push('/users/Dashboard');
-                router.refresh(); // 刷新服务器组件
-            }
-        } catch (error) {
-            //setError('Google sign in failed. Please try again.');
-            console.error('Google sign in error:', error);
-        } finally {
-=======
         } catch (error) {
             setError('An error occurred during Google sign-in. Please try again.');
             console.error('Google sign-in error:', error);
->>>>>>> Stashed changes
             setIsLoading(false);
         }
     };

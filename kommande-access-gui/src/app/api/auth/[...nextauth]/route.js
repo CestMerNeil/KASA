@@ -21,11 +21,7 @@ const authOptions = {
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
-<<<<<<< Updated upstream
-                username: { label: 'Username', type: 'text' },
-=======
                 email: { label: 'Email', type: 'text' },
->>>>>>> Stashed changes
                 password: { label: 'Password', type: 'password' },
             },
             async authorize(credentials) {
@@ -55,15 +51,6 @@ const authOptions = {
     ],
     session: {
         strategy: 'jwt',
-<<<<<<< Updated upstream
-        maxAge: 24 * 60 * 60,
-    },
-    callbacks: {
-        async jwt({ token, user }) {
-            if (user) {
-                token.id = user.id;
-                token.username = user.username;
-=======
         maxAge: 24 * 60 * 60, // 24 hours
     },
     callbacks: {
@@ -91,7 +78,6 @@ const authOptions = {
                     token: user.token,
                     provider: 'credentials'
                 };
->>>>>>> Stashed changes
             }
             return token;
         },
