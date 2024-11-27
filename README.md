@@ -9,6 +9,9 @@
   - [Background](#background)
   - [Technical Stack](#technical-stack)
   - [Install](#install)
+    - [Download the app to mobile device](#download-the-app-to-mobile-device)
+      - [Android](#android)
+      - [iOS](#ios)
     - [Frontend (Next.js)](#frontend-nextjs)
     - [Backend (.NET)](#backend-net)
   - [Context of Use](#context-of-use)
@@ -24,13 +27,34 @@ KASA is a multimedia company aiming to create a user-friendly web platform for m
 
 - **Frontend:** [Next.js](https://nextjs.org/)
 - **Backend:** [.NET](https://dotnet.microsoft.com/)
-- **Database:** TODO
+- **Database:** [SQLite](https://www.sqlite.org/)
 - **Authentication:** [NextAuth.js](https://next-auth.js.org/)
 - **Payment Processing:** [Stripe](https://stripe.com/)
 - **Styling:** [Daisy UI](https://daisyui.com/)
 - **Deployment:** [Vercel](https://vercel.com/)
 
 ## Install
+
+### Download the app to mobile device
+
+#### Android
+1.	Open the website in your browser:
+	Use a browser that supports PWA installation, such as Chrome, Edge, or Firefox.
+2.	Look for the installation option:
+	A “Install” or “Add to Home Screen” prompt may appear automatically in the address bar or as a popup.
+3.	Access the browser menu:
+	If no prompt appears, tap the three-dot menu in the top-right corner of the browser.
+4.	Select “Add to Home Screen”:
+	In the dropdown menu, tap “Add to Home Screen” or “Install App”.
+
+
+#### iOS
+1.	Open the website in Safari:
+	Ensure you are using the Safari browser, as it is the only browser on iOS that supports PWA installation.
+2.	Access the share menu:
+	Tap the Share icon (a square with an upward arrow) located at the bottom of the browser.
+3.	Add to Home Screen:
+	Scroll down the options and select “Add to Home Screen”.
 
 ### Frontend (Next.js)
 
@@ -91,10 +115,6 @@ With these features, the company expects to create a standout multimedia e-comme
 - **Secure Payments**: Integrated with Stripe for secure payment processing.
 
 ## Contributors
-- **XIE Ao**
-- **SEGERIE Reynalde**
-- **VITON Antoine**
-
 <a href="https://github.com/CestMerNeil/KASA/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=CestMerNeil/KASA" />
 </a>
@@ -102,7 +122,4 @@ With these features, the company expects to create a standout multimedia e-comme
 <a href="https://github.com/CestMerNeil/KASA/graphs/contributors">View contributors</a>
 
 ## License
-TODO
-```
-To be continued...
-```
+This project is licensed under the terms of the [MIT License](./LICENSE).
