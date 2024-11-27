@@ -1,0 +1,44 @@
+{
+    "name": "KASA",
+    "short_name": "KASA",
+    "description": "KASA is a platform for showcasing multimedia products like PCs, phones, and tablets.",
+    "start_url": "/",
+    "id": "com.kasa.app",
+    "display": "standalone",
+    "display_override": [
+        "window-controls-overlay",
+        "standalone"
+    ],
+    "background_color": "#f0f0f0",
+    "theme_color": "#FFFFFF",
+    "icons": [
+        {
+            "src": "/icons/favicon-192.ico",
+            "sizes": "192x192",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/icons/favicon-256.ico",
+            "sizes": "256x256",
+            "type": "image/x-icon"
+        },
+        {
+            "src": "/icons/favicon.png",
+            "sizes": "1000x1000",
+            "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshots/iPad-Pro.png",
+            "sizes": "2048x2732",
+            "type": "image/png"
+        },
+        {
+            "src": "/screenshots/desktop.png",
+            "sizes": "2060x1936",
+            "type": "image/png",
+            "form_factor": "wide"
+        }
+    ]
+}
