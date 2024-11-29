@@ -1,5 +1,6 @@
 using kommande_auth_backend.Data;
 using kommande_auth_backend.Models;
+using kommande_auth_backend.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,8 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Services
+builder.Services.AddScoped<IUserService, UserService>();
 
 // SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -23,34 +28,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/user", async (AppDbContext db, [FromQuery] string name)=>
-{
-    // Recherchez un utilisateur avec le mot de passe haché fourni
-    //var hashedPassword = HashPassword(password); // Méthode de hachage à définir
-    var user = await db.Users.FirstOrDefaultAsync(u => u.Name == name);
-    
-    return user is not null ? Results.Ok(user) : Results.NotFound("User not found");
-});
-
-app.MapPost("/user", async (AppDbContext db, [FromBody] User user) =>
-{
-    db.Users.Add(user);
-    await db.SaveChangesAsync();
-
-    return Results.Created($"/user/{user.Id}", user);
-});
-
-/*string HashPassword(string password)
-{
-    using var sha256 = SHA256.Create();
-    byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-    return Convert.ToBase64String(hashedBytes);
-}*/
+app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();  // Appliquer les migrations et créer la BDD si elle n'existe pas
+    db.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
