@@ -95,7 +95,7 @@ const Navbar = () => {
                     <div className='indicator'>
                         <Link href="/users/Cart" className="btn btn-ghost btn-sm">
                             {cartItemCount > 0 && (
-                                <span className="indicator-item badge badge-secondary">
+                                <span className="indicator-item badge badge-info">
                                     {cartItemCount > 99 ? '99+' : cartItemCount}
                                 </span>
                             )}
