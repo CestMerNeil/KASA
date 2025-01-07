@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Q2UhZAJs5n8K1tvu63MyLquhN7j4/Tvbt1+FFFClBxI=",
+  "Source": "kommande-auth-backend",
+  "BasePath": "_content/kommande-auth-backend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
