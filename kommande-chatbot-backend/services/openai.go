@@ -8,13 +8,11 @@ import (
 	"os"
 )
 
-// OpenAIRequest 请求结构
 type OpenAIRequest struct {
 	Model    string              `json:"model"`
 	Messages []map[string]string `json:"messages"`
 }
 
-// OpenAIResponse 响应结构
 type OpenAIResponse struct {
 	Choices []struct {
 		Message struct {
@@ -23,7 +21,6 @@ type OpenAIResponse struct {
 	} `json:"choices"`
 }
 
-// SendToOpenAI 调用 OpenAI API
 func SendToOpenAI(messages []map[string]string) (string, error) {
 	apiKey := os.Getenv("OPENAI_API_KEY")
 	url := "https://api.openai.com/v1/chat/completions"

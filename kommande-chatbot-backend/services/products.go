@@ -22,7 +22,7 @@ type Product struct {
 func FetchProducts() ([]map[string]string, error) {
 	resp, err := http.Get("http://localhost:5031/products")
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to fetch products: %v", err)
 	}
 	defer resp.Body.Close()
 
@@ -32,26 +32,24 @@ func FetchProducts() ([]map[string]string, error) {
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to read response body: %v", err)
 	}
 
 	var products []Product
 	if err := json.Unmarshal(body, &products); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse products: %v", err)
 	}
 
-	var message []map[string]string
+	var messages []map[string]string
 	for _, product := range products {
-		message = append(message, map[string]string{
+		messages = append(messages, map[string]string{
 			"role": "system",
-			"content": fmt.Sprintf(
-				"Product: %s, Price: %.2f, Type: %s, Description: %s",
+			"content": fmt.Sprintf("Product: %s, Price: %.2f, Type: %s, Description: %s",
 				product.ProductName,
 				product.Price,
 				product.Type,
-				product.Description,
-			),
+				product.Description),
 		})
 	}
-	return message, nil
+	return messages, nil
 }

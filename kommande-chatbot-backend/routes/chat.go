@@ -7,40 +7,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var chatContext = make(map[string][]map[string]string)
-
 func RegisterChatRoutes(r *gin.Engine) {
-	r.POST("/chat", func(c *gin.Context) {
-		var requestBody struct {
-			UserID string `json:"user_id"`
-			Input  string `json:"input"`
-		}
+	r.POST("/api/openai", func(c *gin.Context) {
+		var messages []map[string]string
 
-		if err := c.ShouldBindJSON(&requestBody); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+		if err := c.ShouldBindJSON(&messages); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request format"})
 			return
 		}
 
-		messages := chatContext[requestBody.UserID]
-		if messages == nil {
-			productMessages, err := services.FetchProducts()
-			if err != nil {
-				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch product info"})
-				return
-			}
-			messages = append([]map[string]string{
-				{
-					"role":    "system",
-					"content": "You are a recommendation assistant. Based on the database, you will provide users with the best product recommendations.",
-				},
-			}, productMessages...)
-			chatContext[requestBody.UserID] = messages
+		productMessages, err := services.FetchProducts()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch product data"})
+			return
 		}
-
-		messages = append(messages, map[string]string{
-			"role":    "user",
-			"content": requestBody.Input,
-		})
+		messages = append(productMessages, messages...)
 
 		response, err := services.SendToOpenAI(messages)
 		if err != nil {
@@ -48,12 +29,15 @@ func RegisterChatRoutes(r *gin.Engine) {
 			return
 		}
 
-		messages = append(messages, map[string]string{
-			"role":    "assistant",
-			"content": response,
+		c.JSON(http.StatusOK, gin.H{
+			"choices": []map[string]interface{}{
+				{
+					"message": map[string]string{
+						"role":    "assistant",
+						"content": response,
+					},
+				},
+			},
 		})
-		chatContext[requestBody.UserID] = messages
-
-		c.JSON(http.StatusOK, gin.H{"response": response})
 	})
 }
