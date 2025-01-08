@@ -1,86 +1,66 @@
-/**
- * @file        ChatBot.js
- * @brief       Chatbot Component with Interactive Messaging and Product Recommendations.
- * @details     This component provides an interactive chatbot that allows users to send messages and receive responses.
- *              It features automatic product fetching from the backend and displays product recommendations within the chat.
- *              The chatbot interface includes an open/close button and adapts to fit the screen with a fixed position.
- *              Users can input text and send messages via an input field or by pressing Enter.
- *              Bot responses are handled through API calls.
- * @returns     {JSX.Element} - A chatbot component with product recommendations and messaging functionality.
- *****************************************************************
- * @component Details
- * - Uses `useState` to track the chatbot state (open/close), messages, and input field.
- * - Uses `useEffect` for fetching product data on component mount and scrolling to the bottom of messages.
- * - Fetches responses from OpenAI's API for dynamic bot replies.
- * - Messages are displayed conditionally based on the role (assistant or user) with custom styling.
- *****************************************************************
- */
-
-
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
 
 export default function ChatBot() {
     const [isOpen, setIsOpen] = useState(false);
-    const [products, setProducts] = useState([]);
-    const [msg, setMsg] = useState([{ role: 'assistant', content: 'Hello~ May I help U today?' }]);
-    const [input, setInput] = useState('');
-    const messagesEndRef = useRef(null);
+    const [products, setProducts] = useState([]); // 存储产品数据
+    const [msg, setMsg] = useState([
+        { role: 'assistant', content: 'Hello~ May I help you today?' },
+    ]); // 聊天消息
+    const [input, setInput] = useState(''); // 用户输入
+    const messagesEndRef = useRef(null); // 消息滚动控制
 
-    // Fetching product data from the backend
+    // 获取产品数据并初始化聊天消息
     useEffect(() => {
         fetch('/api/data', { method: 'GET' })
             .then((response) => response.json())
             .then((data) => {
-                setProducts(data.products);
-                const productMessages = data.products.map((product) => ({
-                    role: 'system',
-                    content: `Product: ${product.productName}, Price: ${product.price}, type: ${product.type}`
-                }));
-                setMsg((prevMsg) => [
-                    {
-                        role: 'system',
-                        content: 'You are a recommendation assistant. Based on the database, you will provide users with the best product recommendations.'
-                    },
-                    ...productMessages,
-                    ...prevMsg
-                ]);
+                // 确保返回的数据结构正确
+                if (Array.isArray(data.messages) && Array.isArray(data.products)) {
+                    setProducts(data.products); // 存储产品信息
+                    setMsg((prevMsg) => [
+                        ...data.messages, // 添加系统消息（推荐产品等）
+                        ...prevMsg,
+                    ]);
+                } else {
+                    console.error('Unexpected data format from /api/data');
+                }
             })
-            .catch((error) => console.error(error));
+            .catch((error) => console.error('Failed to fetch products:', error));
     }, []);
 
-    // Open/close chatbot
+    // 打开/关闭聊天窗口
     const handleBtnClick = () => {
         setIsOpen(!isOpen);
     };
 
-    // Scroll to the end when messages are updated
+    // 滚动到最新消息
     useEffect(() => {
         if (isOpen) {
             messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
         }
     }, [msg, isOpen]);
 
-    // Sending user input message
+    // 发送用户消息
     const sendMessage = async () => {
         if (input.trim() !== '') {
-            const userMsg = { role: 'user', content: input };
+            const userMsg = { role: 'user', content: input }; // 用户消息格式
             setMsg((prevMsg) => {
                 const newMsg = [...prevMsg, userMsg];
-                handleResponse(newMsg);  // Pass the updated message list
+                handleResponse(newMsg); // 发送所有消息到后端
                 return newMsg;
             });
-            setInput('');  // Clear input after sending
+            setInput(''); // 清空输入框
         }
     };
 
-    // Add bot response to message state
+    // 添加机器人回复到消息列表
     const setResponse = (response) => {
         setMsg((prevMsg) => [...prevMsg, { role: 'assistant', content: response }]);
     };
 
-    // Handling API response
+    // 调用后端 /api/openai 接口
     const handleResponse = async (data2API) => {
         try {
             const res = await fetch('/api/openai', {
@@ -88,7 +68,7 @@ export default function ChatBot() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data2API),
+                body: JSON.stringify(data2API), // 发送完整消息列表
             });
 
             if (!res.ok) {
@@ -96,21 +76,22 @@ export default function ChatBot() {
             }
 
             const data = await res.json();
-            const botResponse = data?.choices?.[0]?.message?.content || 'Sorry, I cannot understand.';
-            setResponse(botResponse);
+            const botResponse = data.choices?.[0]?.message?.content || 'Sorry, I cannot understand.';
+            setResponse(botResponse); // 添加机器人回复
         } catch (error) {
             console.error('Error fetching the response:', error);
             setResponse('Sorry, something went wrong.');
         }
     };
 
-    // Handle key press (Enter) for sending message
+    // 处理回车键发送消息
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             sendMessage();
         }
     };
 
+    // 渲染聊天窗口
     return (
         <div>
             <button
@@ -123,12 +104,12 @@ export default function ChatBot() {
             </button>
 
             {isOpen && (
-                <div className="fixed bottom-20 right-5 w-96 bg-white dark:bg-gray-800 text-black dark:text-white shadow-lg rounded-lg border-t border-l border-r border-gray-300 dark:border-gray-700 z-50">
-                    <div className="p-2 flex justify-between items-center border-b dark:border-gray-700">
+                <div className="fixed bottom-20 right-5 w-96 bg-white shadow-lg rounded-lg">
+                    <div className="p-2 flex justify-between items-center border-b">
                         <h3 className="text-sm font-bold">ChatBot</h3>
                         <button
                             onClick={handleBtnClick}
-                            className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                            className="text-gray-500 hover:text-gray-700"
                         >
                             ✕
                         </button>
@@ -142,25 +123,23 @@ export default function ChatBot() {
                                     key={i}
                                     className={`chat ${m.role === 'assistant' ? 'chat-start' : 'chat-end'}`}
                                 >
-                                    <div className="chat-bubble chat-bubble-primary-content">
-                                        {m.content}
-                                    </div>
+                                    <div className="chat-bubble">{m.content}</div>
                                 </div>
                             ))}
 
                         <div ref={messagesEndRef} />
                     </div>
 
-                    <div className="p-1 border-t dark:border-gray-700 flex">
+                    <div className="p-1 border-t flex">
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Type your message..."
-                            className="input input-m input-bordered flex-grow w-auto mr-2 dark:bg-gray-900 dark:text-white"
+                            className="input flex-grow mr-2"
                             onKeyDown={handleKeyDown}
                         />
-                        <button className="btn btn-primary-content btn-m" onClick={sendMessage}>
+                        <button className="btn" onClick={sendMessage}>
                             Send
                         </button>
                     </div>
