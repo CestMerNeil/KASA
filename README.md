@@ -1,8 +1,12 @@
 # KASA - Web Application for Multimedia Product Management
-[![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white&style=flat-square)](https://nextjs.org/)
-[![Daisy UI](https://img.shields.io/badge/Daisy%20UI-5A0EF8?logo=daisyui&logoColor=white&style=flat-square)](https://daisyui.com/)
-[![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=white&style=flat-square)](https://dotnet.microsoft.com/)
-
+[![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Daisy UI](https://img.shields.io/badge/Daisy%20UI-5A0EF8?logo=daisyui&logoColor=white)](https://daisyui.com/)
+[![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![Gin Framework](https://img.shields.io/badge/Gin-blue?logo=go)](https://gin-gonic.com/)
+[![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
+[![Stripe](https://img.shields.io/badge/Stripe-008CDD?logo=stripe&logoColor=white)](https://stripe.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com/)
+[![MIT License](https://img.shields.io/badge/License-MIT-green?)](./LICENSE)
 ## Table of Contents
 - [KASA - Web Application for Multimedia Product Management](#kasa---web-application-for-multimedia-product-management)
   - [Table of Contents](#table-of-contents)
@@ -13,7 +17,8 @@
       - [Android](#android)
       - [iOS](#ios)
     - [Frontend (Next.js)](#frontend-nextjs)
-    - [Backend (.NET)](#backend-net)
+    - [Backend (.NET Framework)](#backend-net-framework)
+    - [ChatBot Backend (Gin Framework)](#chatbot-backend-gin-framework)
   - [Context of Use](#context-of-use)
   - [Features](#features)
   - [Contributors](#contributors)
@@ -26,7 +31,9 @@ KASA is a multimedia company aiming to create a user-friendly web platform for m
 ## Technical Stack
 
 - **Frontend:** [Next.js](https://nextjs.org/)
-- **Backend:** [.NET](https://dotnet.microsoft.com/)
+- **Auth Backend:** [.NET](https://dotnet.microsoft.com/)
+- **Data Backend:** [.NET](https://dotnet.microsoft.com/)
+- **ChatBot Backend:** [Gin Framework](https://gin-gonic.com/)
 - **Database:** [SQLite](https://www.sqlite.org/)
 - **Authentication:** [NextAuth.js](https://next-auth.js.org/)
 - **Payment Processing:** [Stripe](https://stripe.com/)
@@ -67,7 +74,7 @@ KASA is a multimedia company aiming to create a user-friendly web platform for m
    yarn dev
    ```
 
-### Backend (.NET)
+### Backend (.NET Framework)
 
 - Ensure you have the [.NET SDK](https://dotnet.microsoft.com/download) installed. You can ckheck by running:
    ```zsh
@@ -81,6 +88,20 @@ KASA is a multimedia company aiming to create a user-friendly web platform for m
    ```zsh
    dotnet run
    ```
+
+### ChatBot Backend (Gin Framework)
+
+- We compiled this backend into a binary so it can be run directly.
+   ```zsh
+   ./kommande-chatbot-backend
+   ```
+
+- Of course, if you wish to run the framework, you can use Golang to launch this backend. This requires you to complete a [Golang 1.22+](https://go.dev/) installation (a requirement of the Gin framework).
+  ```zsh
+   go mod tidy // to install dependencies
+   go run main.go
+   ```
+
 
 
 ## Context of Use
