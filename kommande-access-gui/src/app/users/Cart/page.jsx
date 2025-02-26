@@ -8,15 +8,64 @@ import {
     CircleMinus
 } from 'lucide-react';
 import Link from 'next/link';
+import { loadStripe } from '@stripe/stripe-js';
+
+// 初始化Stripe Promise - 修正环境变量名称
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
 
 const Cart = () => {
     const { cartItems, removeFromCart, addToCart } = useCart();
     const [totalPrice, setTotalPrice] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
         setTotalPrice(total);
     }, [cartItems]);
+
+    // 处理结账功能
+    const handleCheckout = async () => {
+        setIsLoading(true);
+        try {
+            // 将购物车商品转换为Stripe可接受的格式
+            const lineItems = cartItems.map(item => ({
+                price_data: {
+                    currency: 'usd',
+                    product_data: {
+                        name: item.productName,
+                        description: `${item.brand} ${item.model}`,
+                        images: [item.image],
+                    },
+                    unit_amount: Math.round(item.price * 100), // Stripe使用美分为单位
+                },
+                quantity: item.quantity,
+            }));
+
+            // 调用Stripe API创建结账会话
+            const response = await fetch('/api/stripe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ lineItems }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to create checkout session');
+            }
+
+            const { url } = await response.json();
+
+            // 跳转到Stripe结账页面
+            window.location.href = url;
+        } catch (error) {
+            console.error('Error during checkout:', error);
+            alert('An error occurred during checkout. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     if (cartItems.length === 0) {
         return (
@@ -125,9 +174,22 @@ const Cart = () => {
                                 <span>${totalPrice.toFixed(2)}</span>
                             </div>
                         </div>
-                        <button className="w-full mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-                            <ShoppingBag className="w-5 h-5" />
-                            Proceed to Checkout
+                        <button
+                            onClick={handleCheckout}
+                            disabled={isLoading}
+                            className="w-full mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                        >
+                            {isLoading ? (
+                                <>
+                                    <span className="loading loading-spinner loading-sm"></span>
+                                    Processing...
+                                </>
+                            ) : (
+                                <>
+                                    <ShoppingBag className="w-5 h-5" />
+                                    Proceed to Checkout
+                                </>
+                            )}
                         </button>
                     </div>
                 </div>

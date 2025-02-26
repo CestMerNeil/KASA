@@ -47,10 +47,15 @@ export const CartProvider = ({ children }) => {
         setTimeout(() => setDeleteItem(null), 1500);
     };
 
+    // 清空购物车功能
+    const clearCart = () => {
+        setCartItems([]);
+    };
+
     const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, cartItemCount }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, cartItemCount }}>
             {children}
             {newCartItem &&
                 <div className="toast toast-start">
