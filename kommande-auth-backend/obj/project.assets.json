@@ -3680,20 +3680,19 @@
     ]
   },
   "packageFolders": {
-    "/home/viton/.nuget/packages/": {}
+    "/Users/neil/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/viton/Documents/ISIMA/ZZ3/KASA/kommande-auth-backend/kommande-auth-backend.csproj",
+      "projectUniqueName": "/Users/neil/Code/KASA/kommande-auth-backend/kommande-auth-backend.csproj",
       "projectName": "kommande-auth-backend",
-      "projectPath": "/home/viton/Documents/ISIMA/ZZ3/KASA/kommande-auth-backend/kommande-auth-backend.csproj",
-      "packagesPath": "/home/viton/.nuget/packages/",
-      "outputPath": "/home/viton/Documents/ISIMA/ZZ3/KASA/kommande-auth-backend/obj/",
+      "projectPath": "/Users/neil/Code/KASA/kommande-auth-backend/kommande-auth-backend.csproj",
+      "packagesPath": "/Users/neil/.nuget/packages/",
+      "outputPath": "/Users/neil/Code/KASA/kommande-auth-backend/obj/",
       "projectStyle": "PackageReference",
-      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
-        "/home/viton/.nuget/NuGet/NuGet.Config"
+        "/Users/neil/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -3768,7 +3767,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.404/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/Users/neil/.dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -29,23 +29,40 @@ export default function Dashboard() {
             if (!session?.user) return;
 
             try {
-                const response = await fetch('https://your-api.com/user?name=${encodeURIComponent(session.user.name)}`', {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_API_URL}/user/user?userId=${encodeURIComponent(session.user.id)}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         //Authorization: `Bearer ${session.user.token}`, // Use token from session
                     },
+                    mode: 'cors',
+                    credentials: 'include',
                 });
 
                 if (!response.ok) {
-                    throw new Error('Failed to fetch user data');
+                    const errorText = await response.text();
+                    let errorMessage = 'Failed to fetch user data';
+                    try {
+                        // 尝试解析错误JSON
+                        const errorData = JSON.parse(errorText);
+                        if (typeof errorData === 'object') {
+                            errorMessage = errorData.message ||
+                                errorData.title ||
+                                errorData.error ||
+                                'Failed to fetch user data';
+                        }
+                    } catch (e) {
+                        // 如果不是有效JSON，使用文本
+                        if (errorText) errorMessage = errorText;
+                    }
+                    throw new Error(errorMessage);
                 }
 
                 const data = await response.json();
                 setUserData(data);
             } catch (error) {
                 console.error('Error fetching user data:', error);
-                setError('Failed to load user information');
+                setError(error.message || 'Failed to load user information');
             } finally {
                 setLoading(false);
             }

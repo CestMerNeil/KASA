@@ -27,20 +27,26 @@ const authOptions = {
             async authorize(credentials) {
                 try {
                     // Call your backend API to validate credentials
-                    const response = await fetch('https://your-api.com/auth/login', {
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_API_URL}/user/login`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             email: credentials.email,
                             password: credentials.password,
                         }),
+                        mode: 'cors',
+                        credentials: 'include',
                     });
 
+                    // 即使响应不是OK的，也尝试读取响应主体
                     const userData = await response.json();
 
                     if (response.ok && userData) {
                         return userData;
                     }
+
+                    // 如果响应不OK，记录错误但返回null
+                    console.error('Login failed with status:', response.status, userData);
                     return null;
                 } catch (error) {
                     console.error('Login failed:', error);

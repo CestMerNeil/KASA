@@ -1,6 +1,5 @@
 using kommande_auth_backend.Models;
 using kommande_auth_backend.Services;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace kommande_auth_backend.Controllers;
@@ -18,7 +17,7 @@ public class UserController(IUserService userService) : ControllerBase
     }
     
     [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    public async Task<IActionResult> Login([FromBody] Models.LoginRequest request)
     {
         var user = await userService.Authenticate(request.Email, request.Password);
         if (user == null)

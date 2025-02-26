@@ -53,6 +53,8 @@ export default function Login() {
             if (result.error) {
                 setError('Invalid email or password. Please try again.');
             } else {
+                // Update user context with session data
+                userLoggedIn(result);
                 router.push('/users/Dashboard');
             }
         } catch (error) {
@@ -230,7 +232,7 @@ export default function Login() {
                         <p className="text-center text-gray-600 text-sm">
                             Don&apos;t have an account?{' '}
                             <Link
-                                href="/auth/register"
+                                href="/users/Register"
                                 className="text-primary hover:text-primary/80 font-semibold transition-colors"
                             >
                                 Sign up
