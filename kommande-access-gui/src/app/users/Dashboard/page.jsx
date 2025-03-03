@@ -129,7 +129,7 @@ export default function Dashboard() {
                     <div className="avatar">
                         <div className="w-24 rounded-full">
                             <img
-                                src={userData?.image || '/default-avatar.png'}
+                                src={userData?.image || '/icons/default-avatar-gradient.svg'}
                                 alt="User Avatar"
                             />
                         </div>

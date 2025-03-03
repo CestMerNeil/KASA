@@ -117,8 +117,13 @@ const Navbar = () => {
                                     height={24}
                                 />
                             ) : (
-                                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-primary-content">
-                                    {user.name?.charAt(0).toUpperCase() || 'U'}
+                                <div className="w-6 h-6 rounded-full overflow-hidden">
+                                    <Image
+                                        src="/icons/default-avatar-minimal.svg"
+                                        alt="User Avatar"
+                                        width={24}
+                                        height={24}
+                                    />
                                 </div>
                             )}
                         </Link>

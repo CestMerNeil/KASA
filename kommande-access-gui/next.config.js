@@ -6,7 +6,7 @@ const withPWA = require('next-pwa')({
 });
 
 module.exports = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     images: {
         remotePatterns: [
             {

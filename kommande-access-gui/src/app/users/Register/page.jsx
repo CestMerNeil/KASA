@@ -76,7 +76,7 @@ export default function Register() {
             };
 
             // 如果是BasicUser类型，添加Image属性
-            userObject.Image = '/default-avatar.png';
+            userObject.Image = '/icons/default-avatar-gradient.svg';
 
             console.log('Sending registration request with data:', JSON.stringify(userObject, null, 2));
 

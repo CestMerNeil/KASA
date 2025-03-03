@@ -10,6 +10,9 @@ export default function ChatBot() {
     ]); // 聊天消息
     const [input, setInput] = useState(''); // 用户输入
     const messagesEndRef = useRef(null); // 消息滚动控制
+    const [isConnected, setIsConnected] = useState(false); // WebSocket连接状态
+    const [isLoading, setIsLoading] = useState(false); // 消息加载状态
+    const wsRef = useRef(null); // WebSocket引用
 
     // 窗口大小设置 - 只有两种固定尺寸
     const [isLargeSize, setIsLargeSize] = useState(false);
@@ -17,6 +20,57 @@ export default function ChatBot() {
     // 预设尺寸
     const smallSize = { width: 320, height: 450 }; // 手机友好的尺寸
     const largeSize = { width: 400, height: 550 }; // 桌面端更大的尺寸
+
+    // 初始化WebSocket连接
+    useEffect(() => {
+        if (isOpen && !wsRef.current) {
+            connectWebSocket();
+        }
+
+        // 组件卸载时关闭WebSocket连接
+        return () => {
+            if (wsRef.current) {
+                wsRef.current.close();
+                wsRef.current = null;
+            }
+        };
+    }, [isOpen]);
+
+    // 连接WebSocket
+    const connectWebSocket = () => {
+        const ws = new WebSocket('ws://localhost:8080/ws/chat');
+
+        ws.onopen = () => {
+            console.log('WebSocket connected');
+            setIsConnected(true);
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.error) {
+                setResponse('Sorry, something went wrong: ' + data.error);
+            } else {
+                const botResponse = data.choices?.[0]?.message?.content || 'Sorry, I cannot understand.';
+                setResponse(botResponse);
+            }
+            setIsLoading(false);
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            setIsConnected(false);
+            setIsLoading(false);
+            wsRef.current = null;
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket disconnected');
+            setIsConnected(false);
+            wsRef.current = null;
+        };
+
+        wsRef.current = ws;
+    };
 
     // 获取产品数据并初始化聊天消息
     useEffect(() => {
@@ -64,6 +118,7 @@ export default function ChatBot() {
                 return newMsg;
             });
             setInput(''); // 清空输入框
+            setIsLoading(true); // 设置加载状态
         }
     };
 
@@ -72,8 +127,20 @@ export default function ChatBot() {
         setMsg((prevMsg) => [...prevMsg, { role: 'assistant', content: response }]);
     };
 
-    // 调用后端 /api/openai 接口
+    // 处理消息发送 - 优先使用WebSocket，失败时回退到HTTP
     const handleResponse = async (data2API) => {
+        // 如果WebSocket已连接，使用WebSocket发送消息
+        if (isConnected && wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+            try {
+                wsRef.current.send(JSON.stringify({ messages: data2API }));
+                return;
+            } catch (error) {
+                console.error('WebSocket send error:', error);
+                // 继续执行，使用HTTP作为备选
+            }
+        }
+
+        // 如果WebSocket不可用，使用HTTP API
         try {
             const res = await fetch('/api/openai', {
                 method: 'POST',
@@ -93,12 +160,15 @@ export default function ChatBot() {
         } catch (error) {
             console.error('Error fetching the response:', error);
             setResponse('Sorry, something went wrong.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     // 处理回车键发送消息
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
             sendMessage();
         }
     };
@@ -139,7 +209,8 @@ export default function ChatBot() {
                     {/* 渐变标题栏，带有拖动手柄 */}
                     <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white flex justify-between items-center">
                         <div className="flex items-center">
-                            <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                            <div className={`w-2 h-2 ${isConnected ? 'bg-green-400' : 'bg-red-400'} rounded-full mr-2 ${isConnected ? 'animate-pulse' : ''}`}
+                                title={isConnected ? 'WebSocket Connected' : 'WebSocket Disconnected'}></div>
                             <h3 className="text-sm font-medium">KASA Support</h3>
                         </div>
                         <div className="flex items-center space-x-3">
@@ -196,6 +267,15 @@ export default function ChatBot() {
                                     </div>
                                 </div>
                             ))}
+                        {isLoading && (
+                            <div className="flex justify-center items-center py-2">
+                                <div className="flex space-x-1">
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                                </div>
+                            </div>
+                        )}
                         <div ref={messagesEndRef} />
                     </div>
 
