@@ -11,6 +11,13 @@ export default function ChatBot() {
     const [input, setInput] = useState(''); // 用户输入
     const messagesEndRef = useRef(null); // 消息滚动控制
 
+    // 窗口大小设置 - 只有两种固定尺寸
+    const [isLargeSize, setIsLargeSize] = useState(false);
+
+    // 预设尺寸
+    const smallSize = { width: 320, height: 450 }; // 手机友好的尺寸
+    const largeSize = { width: 400, height: 550 }; // 桌面端更大的尺寸
+
     // 获取产品数据并初始化聊天消息
     useEffect(() => {
         fetch('/api/data', { method: 'GET' })
@@ -33,6 +40,11 @@ export default function ChatBot() {
     // 打开/关闭聊天窗口
     const handleBtnClick = () => {
         setIsOpen(!isOpen);
+    };
+
+    // 切换窗口大小
+    const toggleSize = () => {
+        setIsLargeSize(!isLargeSize);
     };
 
     // 滚动到最新消息
@@ -91,57 +103,126 @@ export default function ChatBot() {
         }
     };
 
+    // 当前使用的尺寸
+    const currentSize = isLargeSize ? largeSize : smallSize;
+
     // 渲染聊天窗口
     return (
         <div>
+            {/* 聊天按钮 - 更现代的设计 */}
             <button
-                className='fixed bottom-5 right-5 btn btn-circle z-50'
+                className='fixed bottom-5 right-5 w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center z-50'
                 onClick={handleBtnClick}
+                aria-label="Open chat"
             >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
-                </svg>
+                {isOpen ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                    </svg>
+                )}
             </button>
 
+            {/* 聊天窗口 - 现代化设计 */}
             {isOpen && (
-                <div className="fixed bottom-20 right-5 w-96 bg-white shadow-lg rounded-lg">
-                    <div className="p-2 flex justify-between items-center border-b">
-                        <h3 className="text-sm font-bold">ChatBot</h3>
-                        <button
-                            onClick={handleBtnClick}
-                            className="text-gray-500 hover:text-gray-700"
-                        >
-                            ✕
-                        </button>
+                <div
+                    className="fixed bottom-24 right-5 bg-white rounded-2xl shadow-2xl z-40 overflow-hidden transition-all duration-300 ease-in-out border border-gray-200"
+                    style={{
+                        width: `${currentSize.width}px`,
+                        height: `${currentSize.height}px`,
+                        maxWidth: "90vw",
+                    }}
+                >
+                    {/* 渐变标题栏，带有拖动手柄 */}
+                    <div className="p-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white flex justify-between items-center">
+                        <div className="flex items-center">
+                            <div className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></div>
+                            <h3 className="text-sm font-medium">KASA Support</h3>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                            <button
+                                onClick={toggleSize}
+                                className="text-white/80 hover:text-white transition-colors"
+                                title={isLargeSize ? "Switch to small size" : "Switch to large size"}
+                            >
+                                {isLargeSize ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15" />
+                                    </svg>
+                                ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                    </svg>
+                                )}
+                            </button>
+                            <button
+                                onClick={handleBtnClick}
+                                className="text-white/80 hover:text-white transition-colors"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
-                    <div className="p-3 space-y-4 max-h-60 overflow-y-auto">
+                    {/* 消息区域 - 更好的样式 */}
+                    <div
+                        className="p-4 space-y-4 overflow-y-auto bg-gray-50"
+                        style={{ height: `calc(${currentSize.height}px - 130px)` }}
+                    >
                         {msg
                             .filter((m) => m.role === 'assistant' || m.role === 'user')
                             .map((m, i) => (
                                 <div
                                     key={i}
-                                    className={`chat ${m.role === 'assistant' ? 'chat-start' : 'chat-end'}`}
+                                    className={`flex ${m.role === 'assistant' ? 'justify-start' : 'justify-end'}`}
                                 >
-                                    <div className="chat-bubble">{m.content}</div>
+                                    {m.role === 'assistant' && (
+                                        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs mr-2 flex-shrink-0">
+                                            AI
+                                        </div>
+                                    )}
+                                    <div
+                                        className={`rounded-2xl py-2 px-3 max-w-[85%] break-words ${m.role === 'assistant'
+                                            ? 'bg-white border border-gray-200 text-gray-800'
+                                            : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                                            }`}
+                                    >
+                                        {m.content}
+                                    </div>
                                 </div>
                             ))}
-
                         <div ref={messagesEndRef} />
                     </div>
 
-                    <div className="p-1 border-t flex">
-                        <input
-                            type="text"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            placeholder="Type your message..."
-                            className="input flex-grow mr-2"
-                            onKeyDown={handleKeyDown}
-                        />
-                        <button className="btn" onClick={sendMessage}>
-                            Send
-                        </button>
+                    {/* 输入区域 - 现代设计 */}
+                    <div className="p-3 bg-white border-t border-gray-200">
+                        <div className="flex items-center bg-gray-50 rounded-full border border-gray-200 px-3 py-1 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all">
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                placeholder="Type your message..."
+                                className="flex-grow py-2 bg-transparent border-none focus:outline-none text-sm"
+                                onKeyDown={handleKeyDown}
+                            />
+                            <button
+                                className={`ml-2 p-2 rounded-full ${input.trim()
+                                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
+                                    : 'bg-gray-200 text-gray-400'
+                                    } transition-colors`}
+                                onClick={sendMessage}
+                                disabled={!input.trim()}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
