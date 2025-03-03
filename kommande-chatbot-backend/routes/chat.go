@@ -16,14 +16,24 @@ func RegisterChatRoutes(r *gin.Engine) {
 			return
 		}
 
+		// Add role definition system message
+		roleMessage := map[string]string{
+			"role":    "system",
+			"content": "You are KASA's customer service assistant. Your role is to help customers learn about our multimedia products, answer their questions, and provide helpful information about our PCs, mobile phones, tablets, and other devices. Be friendly, professional, and knowledgeable in your responses.",
+		}
+
 		productMessages, err := services.FetchProducts()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch product data"})
 			return
 		}
-		messages = append(productMessages, messages...)
+		
+		// Combine messages: role definition first, then product info, then user messages
+		combinedMessages := []map[string]string{roleMessage}
+		combinedMessages = append(combinedMessages, productMessages...)
+		combinedMessages = append(combinedMessages, messages...)
 
-		response, err := services.SendToOpenAI(messages)
+		response, err := services.SendToOpenAI(combinedMessages)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to process chat"})
 			return
