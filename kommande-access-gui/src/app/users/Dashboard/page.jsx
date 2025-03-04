@@ -129,8 +129,12 @@ export default function Dashboard() {
                     <div className="avatar">
                         <div className="w-24 rounded-full">
                             <img
-                                src={userData?.image || '/icons/default-avatar-gradient.svg'}
+                                src={userData?.image || userData?.picture || session?.user?.picture || '/default-avatar.png'}
                                 alt="User Avatar"
+                                onError={(e) => {
+                                    console.error('Avatar load error:', e);
+                                    e.target.src = '/default-avatar.png';
+                                }}
                             />
                         </div>
                     </div>
